@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ProgressBar
+        android:id="@+id/loadingLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        tools:visibility="visible"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleLarge"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        tools:context=".view.FilmInfoFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_film_info_fragment"
+            tools:context=".view.FilmInfoFragment">
+
+            <TextView
+                android:id="@+id/name_film_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/title_name_film_info_fragment"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/poster_film_info"
+                app:layout_constraintHorizontal_bias="0"
+                android:layout_marginStart="@dimen/margin_film_info_fragment"
+                android:layout_marginEnd="8dp"
+                app:layout_constrainedWidth="true"
+                tools:text="Название фильма"/>
+
+            <ImageView
+                android:id="@+id/poster_film_info"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:adjustViewBounds="true"
+                android:layout_marginEnd="@dimen/margin_film_info_fragment"
+                tools:src="@drawable/terminator2poster"/>
+
+            <TextView
+                android:id="@+id/genre_label"
+                android:text="@string/genre_label_film_info"
+                android:textStyle="bold"
+                android:textSize="@dimen/title_text_size_film_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/name_film_info"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/margin_film_info_fragment"/>
+
+            <TextView
+                android:id="@+id/genre_film_info"
+                tools:text="Фантастика"
+                android:textSize="@dimen/title_text_size_film_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/genre_label"
+                app:layout_constraintBaseline_toBaselineOf="@id/genre_label"
+                app:layout_constraintEnd_toStartOf="@id/poster_film_info"
+                app:layout_constrainedWidth="true"/>
+
+            <ImageView
+                android:id="@+id/icon_year_film_info"
+                android:src="@drawable/ic_calendar_year_film_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/genre_label"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/margin_film_info_fragment"/>
+
+            <TextView
+                android:id="@+id/year_film_info"
+                tools:text="2004"
+                android:textSize="@dimen/title_text_size_film_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/icon_year_film_info"
+                app:layout_constraintTop_toTopOf="@id/icon_year_film_info"
+                android:layout_marginStart="@dimen/margin_film_info_fragment"/>
+
+            <ImageView
+                android:id="@+id/icon_duration_film_info"
+                android:src="@drawable/ic_duration_film_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/year_film_info"
+                app:layout_constraintTop_toTopOf="@id/year_film_info"
+                android:layout_marginStart="@dimen/margin_film_info_fragment"/>
+
+            <TextView
+                android:id="@+id/duration_film_info"
+                tools:text="2 часа 17 минут"
+                android:textSize="@dimen/title_text_size_film_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/icon_duration_film_info"
+                app:layout_constraintTop_toTopOf="@id/icon_duration_film_info"
+                android:layout_marginStart="@dimen/margin_film_info_fragment"/>
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/title_section_bottom_barrier"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="name_film_info, poster_film_info,genre_label, genre_film_info, icon_year_film_info, year_film_info, icon_duration_film_info, duration_film_info"/>
+
+            <TextView
+                android:id="@+id/annotation_film_info"
+                tools:text="@string/terminator2"
+                android:textSize="@dimen/annotation_text_size_film_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_section_bottom_barrier"
+                android:layout_marginStart="@dimen/margin_film_info_fragment"
+                android:layout_marginEnd="@dimen/margin_film_info_fragment"
+                android:layout_marginTop="@dimen/margin_film_info_fragment"/>
+
+
+            <ImageView
+                android:id="@+id/icon_director_film_info"
+                android:src="@drawable/ic_director_film_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/annotation_film_info"
+                android:layout_marginTop="@dimen/margin_film_info_fragment"
+                android:layout_marginStart="@dimen/margin_film_info_fragment"/>
+
+            <TextView
+                android:id="@+id/director_label"
+                android:text="@string/director_label_film_info"
+                android:textStyle="bold"
+                android:textSize="@dimen/title_text_size_film_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/icon_director_film_info"
+                app:layout_constraintTop_toTopOf="@id/icon_director_film_info"
+                android:layout_marginStart="@dimen/margin_film_info_fragment"/>
+
+            <TextView
+                android:id="@+id/director_film_info"
+                tools:text="Джеймс Кэмерон"
+                android:textSize="@dimen/actors_text_size_film_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/icon_director_film_info"
+                app:layout_constraintTop_toBottomOf="@id/icon_director_film_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                android:layout_marginEnd="@dimen/margin_film_info_fragment"
+                android:layout_marginStart="@dimen/margin_film_info_fragment"/>
+
+            <ImageView
+                android:id="@+id/icon_actors_film_info"
+                android:src="@drawable/ic_actors_film_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/director_film_info"
+                android:layout_marginTop="@dimen/margin_film_info_fragment"
+                android:layout_marginStart="@dimen/margin_film_info_fragment"/>
+
+            <TextView
+                android:id="@+id/actors_label"
+                android:text="@string/actors_label_film_info"
+                android:textStyle="bold"
+                android:textSize="@dimen/title_text_size_film_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/icon_actors_film_info"
+                app:layout_constraintTop_toTopOf="@id/icon_actors_film_info"
+                android:layout_marginStart="@dimen/margin_film_info_fragment"/>
+
+            <TextView
+                android:id="@+id/actors_film_info"
+                tools:text="Арнольд Шварценеггер, Линда Хэмилтон, Эдвард Ферлонг, Роберт Патрик"
+                android:textSize="@dimen/actors_text_size_film_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/icon_actors_film_info"
+                app:layout_constraintTop_toBottomOf="@id/icon_actors_film_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                android:layout_marginEnd="@dimen/margin_film_info_fragment"
+                android:layout_marginStart="@dimen/margin_film_info_fragment"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</FrameLayout>
