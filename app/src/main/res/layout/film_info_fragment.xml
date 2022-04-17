@@ -6,15 +6,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <ProgressBar
-        android:id="@+id/loadingLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        tools:visibility="visible"
-        android:visibility="gone"
-        style="?android:attr/progressBarStyleLarge"/>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -80,7 +71,7 @@
                 android:src="@drawable/ic_calendar_year_film_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/genre_label"
+                app:layout_constraintTop_toBottomOf="@id/genre_film_info"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/margin_film_info_fragment"/>
 

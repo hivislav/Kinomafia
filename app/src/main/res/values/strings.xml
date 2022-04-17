@@ -3,4 +3,6 @@
     <string name="genre_label_film_info">Жанр:</string>
     <string name="director_label_film_info">Режиссер</string>
     <string name="actors_label_film_info">Актёры</string>
+    <string name="hits_title_main_fragment">Хиты, проверенные временем</string>
+    <string name="novelties_title_main_fragment">Сейчас в кинотеатрах</string>
 </resources>
