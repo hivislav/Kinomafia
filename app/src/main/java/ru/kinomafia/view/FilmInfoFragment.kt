@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import ru.kinomafia.databinding.FilmInfoFragmentBinding
 import ru.kinomafia.model.FilmInfo
+import ru.kinomafia.model.resToString
 
 class FilmInfoFragment : Fragment() {
     private var _binding: FilmInfoFragmentBinding? = null
@@ -24,15 +25,15 @@ class FilmInfoFragment : Fragment() {
 
         val filmInfo = arguments?.getParcelable<FilmInfo>(BUNDLE_EXTRA)
 
-        if (filmInfo != null) {
-            binding.nameFilmInfo.setText(filmInfo.film.name)
-            binding.genreFilmInfo.setText(filmInfo.film.genre)
-            binding.posterFilmInfo.setImageResource(filmInfo.film.poster)
-            binding.yearFilmInfo.setText(filmInfo.film.year.toString())
-            binding.durationFilmInfo.setText(filmInfo.film.getDurationFilmInString(filmInfo.film.duration))
-            binding.annotationFilmInfo.setText(filmInfo.filmAnnotation)
-            binding.directorFilmInfo.setText(filmInfo.director)
-            binding.actorsFilmInfo.setText(filmInfo.actors)
+        filmInfo?.also {
+            binding.nameFilmInfo.text = it.film.name
+            binding.genreFilmInfo.text = it.film.genre
+            binding.posterFilmInfo.setImageResource(it.film.poster)
+            binding.yearFilmInfo.text = it.film.year.toString()
+            binding.durationFilmInfo.text = it.film.getDurationFilmInString(it.film.duration)
+            binding.annotationFilmInfo.resToString(it.filmAnnotation)
+            binding.directorFilmInfo.text = it.director
+            binding.actorsFilmInfo.text = it.actors
         }
     }
 

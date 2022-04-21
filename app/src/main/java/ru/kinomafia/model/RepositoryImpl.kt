@@ -1,15 +1,7 @@
 package ru.kinomafia.model
 
 class RepositoryImpl: Repository {
-    override fun getFilmInfoFromServer(): FilmInfo {
-        return FilmInfo()
+    override fun getFilmInfoFromServer() = FilmInfo()
+    override fun getFilmInfoFromLocalStorageNovelties() = getNoveltiesFilms()
+    override fun getFilmInfoFromLocalStorageHits() = getHitsFilms()
     }
-
-    override fun getFilmInfoFromLocalStorageNovelties(): List<FilmInfo> {
-        return getNoveltiesFilms()
-    }
-
-    override fun getFilmInfoFromLocalStorageHits(): List<FilmInfo> {
-        return getHitsFilms()
-    }
-}

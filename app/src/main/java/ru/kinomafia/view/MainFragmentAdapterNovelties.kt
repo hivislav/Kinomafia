@@ -10,14 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.kinomafia.R
 import ru.kinomafia.model.FilmInfo
 
-class MainFragmentAdapterNovelties(private var onItemViewClickListener: OnItemViewClickListener?) :
+class MainFragmentAdapterNovelties(private var onItemViewClickListener: MainFragment.OnItemViewClickListener?) :
                                 RecyclerView.Adapter<MainFragmentAdapterNovelties.MainFragmentFilmHolder>(){
 
     private var filmData: List<FilmInfo> = listOf()
-
-    interface OnItemViewClickListener{
-        fun onItemViewClick(filmInfo: FilmInfo)
-    }
 
     fun setFilmInfo(data: List<FilmInfo>) {
         filmData = data
@@ -31,13 +27,17 @@ class MainFragmentAdapterNovelties(private var onItemViewClickListener: OnItemVi
     inner class MainFragmentFilmHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(filmInfo: FilmInfo) {
-            itemView.findViewById<ImageView>(R.id.poster_recycler_film_holder).setImageResource(
+            itemView.apply {
+                findViewById<ImageView>(R.id.poster_recycler_film_holder).setImageResource(
                                                                                 filmInfo.film.poster)
-            itemView.findViewById<TextView>(R.id.name_recycler_film_holder).text = filmInfo.film.name
-            itemView.findViewById<TextView>(R.id.genre_recycler_film_holder).text = filmInfo.film.genre
-            itemView.findViewById<TextView>(R.id.year_recycler_film_holder).text = filmInfo.film.year.toString()
+                findViewById<TextView>(R.id.name_recycler_film_holder).text = filmInfo.film.name
+                findViewById<TextView>(R.id.genre_recycler_film_holder).text = filmInfo.film.genre
+                findViewById<TextView>(R.id.year_recycler_film_holder).text = filmInfo.film.year.toString()
 
-            itemView.setOnClickListener { onItemViewClickListener?.onItemViewClick(filmInfo) }
+                setOnClickListener {
+                    onItemViewClickListener?.onItemViewClick(filmInfo)
+                }
+                }
         }
     }
 
@@ -55,5 +55,4 @@ class MainFragmentAdapterNovelties(private var onItemViewClickListener: OnItemVi
     override fun getItemCount(): Int {
         return filmData.size
     }
-
 }
