@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import ru.kinomafia.R
 import ru.kinomafia.databinding.MainFragmentBinding
 import ru.kinomafia.model.FilmInfo
@@ -34,7 +35,7 @@ class MainFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putParcelable(FilmInfoFragment.BUNDLE_EXTRA, filmInfo)
                 beginTransaction()
-                    .replace(R.id.container, FilmInfoFragment.newInstance(bundle))
+                    .add(R.id.container, FilmInfoFragment.newInstance(bundle))
                     .addToBackStack("")
                     .commitAllowingStateLoss()
             }
@@ -47,7 +48,7 @@ class MainFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putParcelable(FilmInfoFragment.BUNDLE_EXTRA, filmInfo)
                 beginTransaction()
-                    .replace(R.id.container, FilmInfoFragment.newInstance(bundle))
+                    .add(R.id.container, FilmInfoFragment.newInstance(bundle))
                     .addToBackStack("")
                     .commitAllowingStateLoss()
             }
@@ -93,6 +94,7 @@ class MainFragment : Fragment() {
         when(appState) {
             is AppState.Success -> {
                 binding.loadingLayout.hide()
+                binding.root.simpleFunWithoutAction()
                 adapterHits.setFilmInfo(appState.filmDataHits)
                 adapterNovelties.setFilmInfo(appState.filmDataNovelties)
             }
@@ -101,9 +103,12 @@ class MainFragment : Fragment() {
             }
             is AppState.Error -> {
                 binding.loadingLayout.hide()
+                Snackbar.make(binding.root, "Error", Snackbar.LENGTH_LONG)
+                    .setAction("Попробуйте еще раз") {viewModel.getFilmInfo()}.show()
             }
         }
     }
+
     interface OnItemViewClickListener{
         fun onItemViewClick(filmInfo: FilmInfo)
     }

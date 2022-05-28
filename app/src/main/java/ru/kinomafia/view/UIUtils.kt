@@ -1,6 +1,7 @@
 package ru.kinomafia.view
 
 import android.view.View
+import com.google.android.material.snackbar.Snackbar
 
 fun View.show() : View {
     if (visibility != View.VISIBLE) {
@@ -13,4 +14,9 @@ fun View.hide() : View {
         visibility = View.GONE
     }
     return this
+}
+
+fun View.simpleFunWithoutAction(text: String = "Загрузка успешна",
+                                    length: Int = Snackbar.LENGTH_LONG) {
+    Snackbar.make(this, text, length).show()
 }
