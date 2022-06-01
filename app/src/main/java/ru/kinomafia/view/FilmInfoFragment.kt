@@ -1,27 +1,16 @@
 package ru.kinomafia.view
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import ru.kinomafia.databinding.FilmInfoFragmentBinding
 import ru.kinomafia.model.FilmInfo
-import ru.kinomafia.viewmodel.AppState
-import ru.kinomafia.viewmodel.MainViewModel
 
 class FilmInfoFragment : Fragment() {
-
     private var _binding: FilmInfoFragmentBinding? = null
     private val binding get() = _binding!!
-
-    companion object {
-        fun newInstance() = FilmInfoFragment()
-    }
-
-    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -30,19 +19,21 @@ class FilmInfoFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        val filmInfo = arguments?.getParcelable<FilmInfo>(BUNDLE_EXTRA)
 
-        val observer = object: Observer<AppState> {
-            override fun onChanged(t: AppState?) {
-                renderData(t!!)
-            }
+        if (filmInfo != null) {
+            binding.nameFilmInfo.setText(filmInfo.film.name)
+            binding.genreFilmInfo.setText(filmInfo.film.genre)
+            binding.posterFilmInfo.setImageResource(filmInfo.film.poster)
+            binding.yearFilmInfo.setText(filmInfo.film.year.toString())
+            binding.durationFilmInfo.setText(filmInfo.film.getDurationFilmInString(filmInfo.film.duration))
+            binding.annotationFilmInfo.setText(filmInfo.filmAnnotation)
+            binding.directorFilmInfo.setText(filmInfo.director)
+            binding.actorsFilmInfo.setText(filmInfo.actors)
         }
-        viewModel.getLiveData().observe(viewLifecycleOwner, observer)
-        viewModel.getFilmInfo()
-
     }
 
     override fun onDestroyView() {
@@ -50,32 +41,13 @@ class FilmInfoFragment : Fragment() {
         _binding = null
     }
 
+    companion object {
+        const val BUNDLE_EXTRA = "filmInfo"
 
-    private fun renderData(appState: AppState) {
-        when(appState) {
-            is AppState.Success -> {
-                val filmData = appState.filmData
-
-                binding.loadingLayout.visibility = View.GONE
-                setData(filmData)
-            }
-            is AppState.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
-            }
-            is AppState.Error -> {
-                binding.loadingLayout.visibility = View.GONE
-            }
+        fun newInstance(bundle: Bundle): FilmInfoFragment {
+            val fragment = FilmInfoFragment()
+            fragment.arguments = bundle
+            return fragment
         }
-    }
-
-    private fun setData(filmData: FilmInfo) {
-        binding.nameFilmInfo.setText(filmData.film.name)
-        binding.genreFilmInfo.setText(filmData.film.genre)
-        binding.posterFilmInfo.setImageResource(filmData.film.poster)
-        binding.yearFilmInfo.setText(filmData.film.year.toString())
-        binding.durationFilmInfo.setText(filmData.film.getDurationFilmInString(filmData.film.duration))
-        binding.annotationFilmInfo.setText(filmData.filmAnnotation)
-        binding.directorFilmInfo.setText(filmData.director)
-        binding.actorsFilmInfo.setText(filmData.actors)
     }
 }

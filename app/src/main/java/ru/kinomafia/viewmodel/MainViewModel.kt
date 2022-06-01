@@ -18,12 +18,12 @@ class MainViewModel(
     fun getFilmInfo() = getDataFromLocalSource()
 
 
-
     private fun getDataFromLocalSource() {
         liveDataToObserve.value = AppState.Loading
         Thread {
             sleep(2000)
-            liveDataToObserve.postValue(AppState.Success(repositoryImpl.getFilmInfoFromLocalStorage()))
+            liveDataToObserve.postValue(AppState.Success(repositoryImpl.getFilmInfoFromLocalStorageNovelties(),
+                repositoryImpl.getFilmInfoFromLocalStorageHits()) )
         }.start()
     }
 }
