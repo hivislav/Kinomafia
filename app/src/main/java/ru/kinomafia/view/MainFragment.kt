@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import ru.kinomafia.R
 import ru.kinomafia.databinding.MainFragmentBinding
 import ru.kinomafia.model.FilmInfo
@@ -24,32 +25,30 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
+    }
 
-    private val adapterHits = MainFragmentAdapterHits(object : MainFragmentAdapterHits.OnItemViewClickListener {
+    private val adapterHits = MainFragmentAdapterHits(object : OnItemViewClickListener {
         override fun onItemViewClick(filmInfo: FilmInfo) {
-            val fragmentManager = activity?.supportFragmentManager
-
-            if (fragmentManager != null) {
+            activity?.supportFragmentManager?.apply {
                 val bundle = Bundle()
                 bundle.putParcelable(FilmInfoFragment.BUNDLE_EXTRA, filmInfo)
-                fragmentManager.beginTransaction()
-                    .replace(R.id.container, FilmInfoFragment.newInstance(bundle))
+                beginTransaction()
+                    .add(R.id.container, FilmInfoFragment.newInstance(bundle))
                     .addToBackStack("")
                     .commitAllowingStateLoss()
             }
         }
     })
 
-    private val adapterNovelties = MainFragmentAdapterHits(object : MainFragmentAdapterHits.OnItemViewClickListener {
+    private val adapterNovelties = MainFragmentAdapterHits(object : OnItemViewClickListener {
         override fun onItemViewClick(filmInfo: FilmInfo) {
-            val fragmentManager = activity?.supportFragmentManager
-
-            if (fragmentManager != null) {
+            activity?.supportFragmentManager?.apply {
                 val bundle = Bundle()
                 bundle.putParcelable(FilmInfoFragment.BUNDLE_EXTRA, filmInfo)
-                fragmentManager.beginTransaction()
-                    .replace(R.id.container, FilmInfoFragment.newInstance(bundle))
+                beginTransaction()
+                    .add(R.id.container, FilmInfoFragment.newInstance(bundle))
                     .addToBackStack("")
                     .commitAllowingStateLoss()
             }
@@ -65,26 +64,25 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val hitsRecyclerView = binding.hitsRecyclerMainFragment
-        hitsRecyclerView.adapter = adapterHits
-        hitsRecyclerView.layoutManager = LinearLayoutManager(hitsRecyclerView.context,
-            LinearLayoutManager.HORIZONTAL, false)
-        hitsRecyclerView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL))
+        binding.hitsRecyclerMainFragment.also {
+            it.adapter = adapterHits
+            it.layoutManager = LinearLayoutManager(it.context,
+                LinearLayoutManager.HORIZONTAL, false)
+            it.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL))
+        }
 
-        val noveltiesRecyclerView = binding.noveltiesRecyclerMainFragment
-        noveltiesRecyclerView.adapter = adapterNovelties
-        noveltiesRecyclerView.layoutManager = LinearLayoutManager(noveltiesRecyclerView.context,
-            LinearLayoutManager.HORIZONTAL, false)
-        noveltiesRecyclerView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL))
-
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        binding.noveltiesRecyclerMainFragment.also {
+            it.adapter = adapterNovelties
+            it.layoutManager = LinearLayoutManager(it.context,
+                LinearLayoutManager.HORIZONTAL, false)
+            it.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL))
+        }
 
         val observer = Observer<AppState> {
             renderData(it)
         }
         viewModel.getLiveData().observe(viewLifecycleOwner, observer)
         viewModel.getFilmInfo()
-
     }
 
     override fun onDestroyView() {
@@ -95,16 +93,23 @@ class MainFragment : Fragment() {
     private fun renderData(appState: AppState) {
         when(appState) {
             is AppState.Success -> {
-                binding.loadingLayout.visibility = View.GONE
+                binding.loadingLayout.hide()
+                binding.root.simpleFunWithoutAction()
                 adapterHits.setFilmInfo(appState.filmDataHits)
                 adapterNovelties.setFilmInfo(appState.filmDataNovelties)
             }
             is AppState.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
+                binding.loadingLayout.show()
             }
             is AppState.Error -> {
-                binding.loadingLayout.visibility = View.GONE
+                binding.loadingLayout.hide()
+                Snackbar.make(binding.root, "Error", Snackbar.LENGTH_LONG)
+                    .setAction("Попробуйте еще раз") {viewModel.getFilmInfo()}.show()
             }
         }
+    }
+
+    interface OnItemViewClickListener{
+        fun onItemViewClick(filmInfo: FilmInfo)
     }
 }
