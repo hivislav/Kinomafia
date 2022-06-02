@@ -86,7 +86,7 @@ class MainFragment : Fragment() {
             renderData(it)
         }
         viewModel.getLiveData().observe(viewLifecycleOwner, observer)
-        viewModel.getFilmInfo()
+        viewModel.getDataFromServer()
     }
 
     override fun onDestroyView() {
@@ -108,7 +108,7 @@ class MainFragment : Fragment() {
             is AppState.Error -> {
                 binding.loadingLayout.hide()
                 Snackbar.make(binding.root, "Error", Snackbar.LENGTH_LONG)
-                    .setAction("Попробуйте еще раз") {viewModel.getFilmInfo()}.show()
+                    .setAction("Попробуйте еще раз") {viewModel.getDataFromServer()}.show()
             }
         }
     }

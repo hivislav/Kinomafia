@@ -4,21 +4,18 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
-import ru.kinomafia.model.entities.rest_entities.FilmItemListDTO
+import ru.kinomafia.model.entities.rest_entities.FilmInfoDTO
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
 import java.util.stream.Collectors
 import javax.net.ssl.HttpsURLConnection
 
-const val API_KEY = "k_tbc3c4u4"
-const val TOP_250_MOVIES_KEY = "Top250Movies"
-const val MOST_POPULAR_MOVIES_KEY = "MostPopularMovies"
 
-object ListFilmLoader {
+object FilmInfoLoader {
     //функция для загрузки данных
-    fun loadListFilm(keyTypeToDownloadListFilm: String): FilmItemListDTO? {
-        val uri = URL("https://imdb-api.com/API/$keyTypeToDownloadListFilm/$API_KEY")
+    fun loadFilmInfo(id: String): FilmInfoDTO? {
+        val uri = URL("https://imdb-api.com/en/API/Title/$API_KEY/$id")
         //создаем соединение
         lateinit var urlConnection: HttpsURLConnection
 
@@ -30,14 +27,14 @@ object ListFilmLoader {
             urlConnection.readTimeout = 10000
             //считываем данные из входящего потока
             val bufferedReader = BufferedReader(InputStreamReader(urlConnection.inputStream))
-            //преобразовываем ответ от сервера (JSON) в модель данных (FilmItemListDTO)
+            //преобразовываем ответ от сервера (JSON) в модель данных (FilmInfoDTO)
             val lines = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                 getLinesForOld(bufferedReader)
             } else {
                 getLines(bufferedReader)
             }
 
-            Gson().fromJson(lines, FilmItemListDTO::class.java)
+            Gson().fromJson(lines, FilmInfoDTO::class.java)
         } catch (e: Exception) {
             e.printStackTrace()
             Log.d("myLogs", e.toString())

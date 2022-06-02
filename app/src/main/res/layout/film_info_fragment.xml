@@ -7,6 +7,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="?android:windowBackground">
 
+    <ProgressBar
+        android:id="@+id/loadingLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        tools:visibility="visible"
+        android:visibility="gone"
+        style="?android:attr/progressBarStyleLarge"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

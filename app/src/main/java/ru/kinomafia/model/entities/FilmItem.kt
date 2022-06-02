@@ -12,9 +12,3 @@ data class FilmItem(
     val image: String,
     val imDbRating: String
 ) : Parcelable
-
-    fun getDurationFilmInString(duration: Int): String {
-        val hours: Int = duration / 60
-        val minutes: Int = duration - 60 * hours
-        return ("$hours ч. $minutes мин.")
-    }

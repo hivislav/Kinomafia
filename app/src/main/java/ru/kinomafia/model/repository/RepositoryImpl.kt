@@ -1,12 +1,28 @@
 package ru.kinomafia.model.repository
 
+import ru.kinomafia.model.FilmInfoLoader
 import ru.kinomafia.model.ListFilmLoader
 import ru.kinomafia.model.MOST_POPULAR_MOVIES_KEY
 import ru.kinomafia.model.TOP_250_MOVIES_KEY
+import ru.kinomafia.model.entities.FilmInfo
 import ru.kinomafia.model.entities.FilmItem
 
 
 class RepositoryImpl: Repository {
+    override fun getFilmInfo(id: String): FilmInfo {
+        val dto = FilmInfoLoader.loadFilmInfo(id)
+        return FilmInfo(
+            dto?.id ?: "",
+            dto?.title ?: "",
+            dto?.year ?: "",
+            dto?.image ?: "",
+            dto?.runtimeStr ?: "",
+            dto?.plot ?: "",
+            dto?.directors ?: "",
+            dto?.stars ?: "",
+            dto?.genres ?: ""
+        )
+    }
 
     override fun getMostPopularMoviesFilmListFromServer(): List<FilmItem> {
         val result = emptyList<FilmItem>().toMutableList()
