@@ -6,7 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ru.kinomafia.databinding.FilmInfoFragmentBinding
-import ru.kinomafia.model.FilmInfo
+import ru.kinomafia.model.FilmItem
+import ru.kinomafia.model.getDurationFilmInString
 import ru.kinomafia.model.resToString
 
 class FilmInfoFragment : Fragment() {
@@ -23,17 +24,17 @@ class FilmInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val filmInfo = arguments?.getParcelable<FilmInfo>(BUNDLE_EXTRA)
+        val filmInfo = arguments?.getParcelable<FilmItem>(BUNDLE_EXTRA)
 
         filmInfo?.also {
-            binding.nameFilmInfo.text = it.film.name
-            binding.genreFilmInfo.text = it.film.genre
-            binding.posterFilmInfo.setImageResource(it.film.poster)
-            binding.yearFilmInfo.text = it.film.year.toString()
-            binding.durationFilmInfo.text = it.film.getDurationFilmInString(it.film.duration)
-            binding.annotationFilmInfo.resToString(it.filmAnnotation)
-            binding.directorFilmInfo.text = it.director
-            binding.actorsFilmInfo.text = it.actors
+//            binding.nameFilmInfo.text = it.name
+//            binding.genreFilmInfo.text = it.genre
+//            binding.posterFilmInfo.setImageResource(it.poster)
+//            binding.yearFilmInfo.text = it.year.toString()
+//            binding.durationFilmInfo.text = getDurationFilmInString(it.duration)
+//            binding.annotationFilmInfo.resToString(it.filmAnnotation)
+//            binding.directorFilmInfo.text = it.director
+//            binding.actorsFilmInfo.text = it.actors
         }
     }
 

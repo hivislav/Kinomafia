@@ -8,14 +8,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.kinomafia.R
-import ru.kinomafia.model.FilmInfo
+import ru.kinomafia.model.FilmItem
 
 class MainFragmentAdapterNovelties(private var onItemViewClickListener: MainFragment.OnItemViewClickListener?) :
                                 RecyclerView.Adapter<MainFragmentAdapterNovelties.MainFragmentFilmHolder>(){
 
-    private var filmData: List<FilmInfo> = listOf()
+    private var filmData: List<FilmItem> = listOf()
 
-    fun setFilmInfo(data: List<FilmInfo>) {
+    fun setFilmInfo(data: List<FilmItem>) {
         filmData = data
         notifyDataSetChanged()
     }
@@ -26,18 +26,16 @@ class MainFragmentAdapterNovelties(private var onItemViewClickListener: MainFrag
 
     inner class MainFragmentFilmHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(filmInfo: FilmInfo) {
+        fun bind(filmItem: FilmItem) {
             itemView.apply {
-                findViewById<ImageView>(R.id.poster_recycler_film_holder).setImageResource(
-                                                                                filmInfo.film.poster)
-                findViewById<TextView>(R.id.name_recycler_film_holder).text = filmInfo.film.name
-                findViewById<TextView>(R.id.genre_recycler_film_holder).text = filmInfo.film.genre
-                findViewById<TextView>(R.id.year_recycler_film_holder).text = filmInfo.film.year.toString()
-
+                findViewById<ImageView>(R.id.poster_recycler_film_holder).setImageResource(R.drawable.poster_no)
+                findViewById<TextView>(R.id.name_recycler_film_holder).text = filmItem.title
+                findViewById<TextView>(R.id.genre_recycler_film_holder).text = filmItem.imDbRating
+                findViewById<TextView>(R.id.year_recycler_film_holder).text = filmItem.year
                 setOnClickListener {
-                    onItemViewClickListener?.onItemViewClick(filmInfo)
+                    onItemViewClickListener?.onItemViewClick(filmItem)
                 }
-                }
+            }
         }
     }
 

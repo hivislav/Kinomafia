@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import ru.kinomafia.R
 import ru.kinomafia.databinding.MainFragmentBinding
-import ru.kinomafia.model.FilmInfo
+import ru.kinomafia.model.FilmItem
 import ru.kinomafia.viewmodel.AppState
 import ru.kinomafia.viewmodel.MainViewModel
 
@@ -30,10 +30,10 @@ class MainFragment : Fragment() {
     }
 
     private val adapterHits = MainFragmentAdapterHits(object : OnItemViewClickListener {
-        override fun onItemViewClick(filmInfo: FilmInfo) {
+        override fun onItemViewClick(filmItem: FilmItem) {
             activity?.supportFragmentManager?.apply {
                 val bundle = Bundle()
-                bundle.putParcelable(FilmInfoFragment.BUNDLE_EXTRA, filmInfo)
+                bundle.putParcelable(FilmInfoFragment.BUNDLE_EXTRA, filmItem)
                 beginTransaction()
                     .add(R.id.container, FilmInfoFragment.newInstance(bundle))
                     .addToBackStack("")
@@ -43,10 +43,10 @@ class MainFragment : Fragment() {
     })
 
     private val adapterNovelties = MainFragmentAdapterHits(object : OnItemViewClickListener {
-        override fun onItemViewClick(filmInfo: FilmInfo) {
+        override fun onItemViewClick(filmItem: FilmItem) {
             activity?.supportFragmentManager?.apply {
                 val bundle = Bundle()
-                bundle.putParcelable(FilmInfoFragment.BUNDLE_EXTRA, filmInfo)
+                bundle.putParcelable(FilmInfoFragment.BUNDLE_EXTRA, filmItem)
                 beginTransaction()
                     .add(R.id.container, FilmInfoFragment.newInstance(bundle))
                     .addToBackStack("")
@@ -110,6 +110,6 @@ class MainFragment : Fragment() {
     }
 
     interface OnItemViewClickListener{
-        fun onItemViewClick(filmInfo: FilmInfo)
+        fun onItemViewClick(filmItem: FilmItem)
     }
 }

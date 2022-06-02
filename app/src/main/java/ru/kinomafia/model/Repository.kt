@@ -1,7 +1,7 @@
 package ru.kinomafia.model
 
 interface Repository {
-    fun getFilmInfoFromServer(): FilmInfo
-    fun getFilmInfoFromLocalStorageNovelties(): List<FilmInfo>
-    fun getFilmInfoFromLocalStorageHits(): List<FilmInfo>
+    fun getFilmInfoFromServer(): FilmItem
+    fun getFilmInfoFromLocalStorageNovelties(): List<FilmItem>
+    fun getFilmInfoFromLocalStorageHits(): List<FilmItem>
 }
