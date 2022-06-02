@@ -15,17 +15,22 @@ class MainViewModel(
         return liveDataToObserve
     }
 
-    fun getFilmInfo() = getDataFromLocalSource()
+    fun getFilmInfo() = getDataFromServer()
 
-    private fun getDataFromLocalSource() {
+    private fun getDataFromServer() {
         liveDataToObserve.value = AppState.Loading
         Thread {
+            if (repositoryImpl.getMostPopularMoviesFilmListFromServer().isNotEmpty() &&
+                repositoryImpl.getTop250FilmListFromServer().isNotEmpty()) {
                 liveDataToObserve.postValue(
                     AppState.Success(
                         repositoryImpl.getMostPopularMoviesFilmListFromServer(),
                         repositoryImpl.getTop250FilmListFromServer()
                     )
                 )
+            } else {
+                liveDataToObserve.postValue(AppState.Error)
+            }
         }.start()
     }
 }

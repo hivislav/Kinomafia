@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import com.google.gson.Gson
 import ru.kinomafia.model.entities.rest_entities.FilmItemListDTO
+import ru.kinomafia.viewmodel.AppState
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
@@ -40,7 +41,7 @@ object ListFilmLoader {
             Gson().fromJson(lines, FilmItemListDTO::class.java)
         } catch (e: Exception) {
             e.printStackTrace()
-            Log.d("myLogs", "Нет доступа к сервису")
+            Log.d("myLogs", e.toString())
             null
         } finally {
             urlConnection.disconnect()
