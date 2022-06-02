@@ -3,6 +3,6 @@
     <string name="genre_label_film_info">Жанр:</string>
     <string name="director_label_film_info">Режиссер</string>
     <string name="actors_label_film_info">Актёры</string>
-    <string name="hits_title_main_fragment">Хиты, проверенные временем</string>
-    <string name="novelties_title_main_fragment">Сейчас в кинотеатрах</string>
+    <string name="top250_title_main_fragment">ТОП-250 по версии IMDB</string>
+    <string name="most_popular_title_main_fragment">Популярные фильмы</string>
 </resources>

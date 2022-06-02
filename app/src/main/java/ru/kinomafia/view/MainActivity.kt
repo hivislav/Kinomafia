@@ -1,11 +1,12 @@
 package ru.kinomafia.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.main_activity.*
 import pl.droidsonroids.gif.GifDrawable
 import ru.kinomafia.R
 import ru.kinomafia.databinding.MainActivityBinding
+import ru.kinomafia.view.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: MainActivityBinding
