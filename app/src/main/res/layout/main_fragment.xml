@@ -26,7 +26,7 @@
     tools:context=".view.main.MainFragment">
 
     <TextView
-        android:id="@+id/hits_title_main_fragment"
+        android:id="@+id/top_250_title_main_fragment"
         android:textSize="@dimen/title_text_size_film_info"
         android:textStyle="bold"
         android:layout_width="match_parent"
@@ -34,7 +34,7 @@
         android:text="@string/top250_title_main_fragment" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/hits_recycler_main_fragment"
+        android:id="@+id/top_250_recycler_main_fragment"
         android:layout_marginTop="@dimen/margin_film_info_fragment"
         android:orientation="horizontal"
         tools:listitem="@layout/recycler_film_holder"
@@ -43,15 +43,16 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <TextView
-        android:id="@+id/novelties_title_main_fragment"
+        android:id="@+id/most_popular_title_main_fragment"
         android:textSize="@dimen/title_text_size_film_info"
         android:textStyle="bold"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/most_popular_title_main_fragment" />
+        android:text="@string/most_popular_title_main_fragment"
+        android:layout_marginTop="@dimen/margin_main_fragment"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/novelties_recycler_main_fragment"
+        android:id="@+id/most_popular_recycler_main_fragment"
         android:layout_marginTop="@dimen/margin_film_info_fragment"
         android:orientation="horizontal"
         tools:listitem="@layout/recycler_film_holder"

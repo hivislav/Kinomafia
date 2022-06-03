@@ -46,7 +46,7 @@
 
             <ImageView
                 android:id="@+id/poster_film_info"
-                android:layout_width="100dp"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -74,7 +74,8 @@
                 app:layout_constraintStart_toEndOf="@id/genre_label"
                 app:layout_constraintBaseline_toBaselineOf="@id/genre_label"
                 app:layout_constraintEnd_toStartOf="@id/poster_film_info"
-                app:layout_constrainedWidth="true"/>
+                app:layout_constrainedWidth="true"
+                android:layout_marginStart="@dimen/margin_film_info_fragment"/>
 
             <ImageView
                 android:id="@+id/icon_year_film_info"
@@ -100,9 +101,8 @@
                 android:src="@drawable/ic_duration_film_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/year_film_info"
-                app:layout_constraintTop_toTopOf="@id/year_film_info"
-                android:layout_marginStart="@dimen/margin_film_info_fragment"/>
+                app:layout_constraintStart_toStartOf="@id/icon_year_film_info"
+                app:layout_constraintTop_toBottomOf="@id/icon_year_film_info" />
 
             <TextView
                 android:id="@+id/duration_film_info"

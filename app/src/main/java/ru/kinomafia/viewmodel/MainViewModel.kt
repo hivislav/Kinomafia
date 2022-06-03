@@ -27,7 +27,7 @@ class MainViewModel(
                     )
                 )
             } else {
-                liveDataToObserve.postValue(AppState.Error)
+                liveDataToObserve.postValue(AppState.Error(""))
             }
         }.start()
     }

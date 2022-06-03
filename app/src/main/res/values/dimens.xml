@@ -7,4 +7,5 @@
     <dimen name="annotation_text_size_film_info">14sp</dimen>
     <dimen name="name_recycler_film_holder_10sp">10sp</dimen>
     <dimen name="name_recycler_film_holder_8sp">8sp</dimen>
+    <dimen name="margin_main_fragment">16dp</dimen>
 </resources>

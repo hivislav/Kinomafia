@@ -5,7 +5,7 @@ import ru.kinomafia.model.entities.FilmItem
 
 sealed class AppState {
     data class Success(val filmDataNovelties: List<FilmItem>, val filmDataHits: List<FilmItem>): AppState()
-    object Error: AppState()
+    data class Error(val filmID: String): AppState()
     object Loading: AppState()
     data class SuccessLoadingFilmInfo (val filmInfo: FilmInfo) : AppState()
 }

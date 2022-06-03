@@ -33,7 +33,7 @@ class MainFragment : Fragment() {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
-    private val adapterHits = MainFragmentAdapterTop250(object : OnItemViewClickListener {
+    private val adapterTop250 = MainFragmentAdapterTop250(object : OnItemViewClickListener {
         override fun onItemViewClick(filmItem: FilmItem) {
             activity?.supportFragmentManager?.apply {
                 val bundle = Bundle()
@@ -46,7 +46,7 @@ class MainFragment : Fragment() {
         }
     })
 
-    private val adapterNovelties = MainFragmentAdapterTop250(object : OnItemViewClickListener {
+    private val adapterMostPopular = MainFragmentAdapterMostPopular(object : OnItemViewClickListener {
         override fun onItemViewClick(filmItem: FilmItem) {
             activity?.supportFragmentManager?.apply {
                 val bundle = Bundle()
@@ -68,15 +68,15 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.hitsRecyclerMainFragment.also {
-            it.adapter = adapterHits
+        binding.top250RecyclerMainFragment.also {
+            it.adapter = adapterTop250
             it.layoutManager = LinearLayoutManager(it.context,
                 LinearLayoutManager.HORIZONTAL, false)
             it.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL))
         }
 
-        binding.noveltiesRecyclerMainFragment.also {
-            it.adapter = adapterNovelties
+        binding.mostPopularRecyclerMainFragment.also {
+            it.adapter = adapterMostPopular
             it.layoutManager = LinearLayoutManager(it.context,
                 LinearLayoutManager.HORIZONTAL, false)
             it.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL))
@@ -99,8 +99,8 @@ class MainFragment : Fragment() {
             is AppState.Success -> {
                 binding.loadingLayout.hide()
                 binding.root.simpleFunWithoutAction()
-                adapterHits.setFilmInfo(appState.filmDataHits)
-                adapterNovelties.setFilmInfo(appState.filmDataNovelties)
+                adapterTop250.setFilmInfo(appState.filmDataHits)
+                adapterMostPopular.setFilmInfo(appState.filmDataNovelties)
             }
             is AppState.Loading -> {
                 binding.loadingLayout.show()

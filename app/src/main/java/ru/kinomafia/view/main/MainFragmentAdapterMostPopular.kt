@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.recycler_film_holder.view.*
 import ru.kinomafia.R
 import ru.kinomafia.model.entities.FilmItem
 
@@ -27,8 +29,10 @@ class MainFragmentAdapterMostPopular(private var onItemViewClickListener: MainFr
     inner class MainFragmentFilmHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(filmItem: FilmItem) {
+
+
             itemView.apply {
-                findViewById<ImageView>(R.id.poster_recycler_film_holder).setImageResource(R.drawable.poster_no)
+                Picasso.get().load(filmItem.image).placeholder(R.drawable.poster_no).into(poster_recycler_film_holder)
                 findViewById<TextView>(R.id.name_recycler_film_holder).text = filmItem.title
                 findViewById<TextView>(R.id.genre_recycler_film_holder).text = filmItem.imDbRating
                 findViewById<TextView>(R.id.year_recycler_film_holder).text = filmItem.year

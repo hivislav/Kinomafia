@@ -10,7 +10,7 @@
 
     <ImageView
         android:id="@+id/poster_recycler_film_holder"
-        tools:src="@drawable/terminator2poster"
+        tools:src="@drawable/poster_no"
         android:layout_width="match_parent"
         android:layout_height="150dp"/>
 

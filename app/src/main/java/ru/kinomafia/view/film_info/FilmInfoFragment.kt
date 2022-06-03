@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.recycler_film_holder.view.*
 import ru.kinomafia.R
 import ru.kinomafia.databinding.FilmInfoFragmentBinding
 import ru.kinomafia.model.entities.FilmItem
@@ -53,7 +55,7 @@ class FilmInfoFragment : Fragment() {
                 root.simpleFunWithoutAction()
 
                 nameFilmInfo.text = appState.filmInfo.title
-                posterFilmInfo.setImageResource(R.drawable.poster_no)
+                Picasso.get().load(appState.filmInfo.image).placeholder(R.drawable.poster_no).into(posterFilmInfo)
                 genreFilmInfo.text = appState.filmInfo.genres
                 yearFilmInfo.text = appState.filmInfo.year
                 durationFilmInfo.text = appState.filmInfo.runtimeStr
@@ -65,9 +67,9 @@ class FilmInfoFragment : Fragment() {
                 loadingLayout.show()
             }
             is AppState.Error -> {
-//                loadingLayout.hide()
-//                Snackbar.make(binding.root, "Error", Snackbar.LENGTH_LONG)
-//                    .setAction("Попробуйте еще раз") {viewModel.loadFilmInfoFromServer(appState.)}.show()
+                loadingLayout.hide()
+                Snackbar.make(binding.root, "Error", Snackbar.LENGTH_LONG)
+                    .setAction("Попробуйте еще раз") {viewModel.loadFilmInfoFromServer(appState.filmID)}.show()
             }
             else -> {}
         }
