@@ -15,11 +15,7 @@ class FilmInfoViewModel(private val liveData: MutableLiveData<AppState> =  Mutab
     fun loadFilmInfoFromServer(id: String) {
         liveData.postValue(AppState.Loading)
         Thread {
-            if (repositoryImpl.getFilmInfo(id).title != "null") {
-                liveData.postValue(AppState.SuccessLoadingFilmInfo(repositoryImpl.getFilmInfo(id)))
-            } else {
-                liveData.postValue(AppState.Error(id))
-            }
+            liveData.postValue(AppState.SuccessLoadingFilmInfo(repositoryImpl.getFilmInfo(id)))
         }.start()
     }
 }
