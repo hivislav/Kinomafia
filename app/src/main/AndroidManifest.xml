@@ -20,6 +20,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name=".view.film_info.FilmInfoService"/>
+
+        <receiver
+            android:name=".view.BroadcastReceiverConnectivityAction"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="CONNECTIVITY_ACTION"/>
+            </intent-filter>
+
+        </receiver>
     </application>
 
 </manifest>

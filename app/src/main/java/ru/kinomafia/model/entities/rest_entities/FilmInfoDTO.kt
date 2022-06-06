@@ -1,5 +1,9 @@
 package ru.kinomafia.model.entities.rest_entities
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class FilmInfoDTO(
     val id: String,
     val title:String,
@@ -10,4 +14,4 @@ data class FilmInfoDTO(
     val directors: String,
     val stars: String,
     val genres: String
-)
+) : Parcelable

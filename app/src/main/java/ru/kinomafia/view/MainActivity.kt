@@ -1,5 +1,8 @@
 package ru.kinomafia.view
 
+import android.content.Intent
+import android.content.IntentFilter
+import android.net.ConnectivityManager.CONNECTIVITY_ACTION
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.main_activity.*
@@ -10,6 +13,8 @@ import ru.kinomafia.view.main.MainFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: MainActivityBinding
+
+    private val receiver = BroadcastReceiverConnectivityAction()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,5 +35,7 @@ class MainActivity : AppCompatActivity() {
                     .commitNow()
             }
         }
+
+        registerReceiver(receiver, IntentFilter(CONNECTIVITY_ACTION))
     }
 }
