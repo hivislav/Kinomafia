@@ -2,7 +2,6 @@ package ru.kinomafia.model.entities
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import ru.kinomafia.R
 
 @Parcelize
 data class FilmItem(

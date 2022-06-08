@@ -9,7 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.recycler_film_holder.view.*
 import ru.kinomafia.R
 import ru.kinomafia.databinding.FilmInfoFragmentBinding
 import ru.kinomafia.model.entities.FilmItem
@@ -18,10 +17,6 @@ import ru.kinomafia.view.show
 import ru.kinomafia.view.simpleFunWithoutAction
 import ru.kinomafia.viewmodel.AppState
 import ru.kinomafia.viewmodel.FilmInfoViewModel
-
-
-
-
 
 class FilmInfoFragment : Fragment() {
     private var _binding: FilmInfoFragmentBinding? = null
@@ -54,14 +49,14 @@ class FilmInfoFragment : Fragment() {
                 loadingLayout.hide()
                 root.simpleFunWithoutAction()
 
-                nameFilmInfo.text = appState.filmInfo.title
-                Picasso.get().load(appState.filmInfo.image).placeholder(R.drawable.poster_no).into(posterFilmInfo)
-                genreFilmInfo.text = appState.filmInfo.genres
-                yearFilmInfo.text = appState.filmInfo.year
-                durationFilmInfo.text = appState.filmInfo.runtimeStr
-                annotationFilmInfo.text = appState.filmInfo.plot
-                directorFilmInfo.text = appState.filmInfo.directors
-                actorsFilmInfo.text = appState.filmInfo.stars
+                nameFilmInfo.text = appState.filmInfoDTO.title
+                Picasso.get().load(appState.filmInfoDTO.image).placeholder(R.drawable.poster_no).into(posterFilmInfo)
+                genreFilmInfo.text = appState.filmInfoDTO.genres
+                yearFilmInfo.text = appState.filmInfoDTO.year
+                durationFilmInfo.text = appState.filmInfoDTO.runtimeStr
+                annotationFilmInfo.text = appState.filmInfoDTO.plot
+                directorFilmInfo.text = appState.filmInfoDTO.directors
+                actorsFilmInfo.text = appState.filmInfoDTO.stars
             }
             is AppState.Loading -> {
                 loadingLayout.show()
