@@ -42,13 +42,13 @@ class RepositoryImpl: Repository {
         retrofit.getFilmInfo(filmID = id).enqueue(callback)
     }
 
-    override fun getTop250FilmListFromServer() : List<FilmItem>? {
+    override fun getTop250FilmListFromServer() : List<FilmItem> {
         val dto = retrofit.getFilmItemListTop250().execute().body()
-        return dto?.let { converterDTOtoItemList(it) }
+        return dto?.let { converterDTOtoItemList(it) } ?: emptyList()
     }
 
-    override fun getMostPopularMoviesFilmListFromServer() : List<FilmItem>? {
+    override fun getMostPopularMoviesFilmListFromServer() : List<FilmItem> {
         val dto = retrofit.getFilmItemListMostPopular().execute().body()
-        return dto?.let { converterDTOtoItemList(it) }
+        return dto?.let { converterDTOtoItemList(it) } ?: emptyList()
     }
 }

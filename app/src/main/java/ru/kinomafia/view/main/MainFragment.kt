@@ -99,8 +99,8 @@ class MainFragment : Fragment() {
             is AppState.Success -> {
                 binding.loadingLayout.hide()
                 binding.root.simpleFunWithoutAction()
-                appState.filmItemListTop250?.let { adapterTop250.setFilmInfo(it) }
-                appState.filmItemListMostPopular?.let { adapterMostPopular.setFilmInfo(it) }
+                appState.filmItemListTop250.let { adapterTop250.setFilmInfo(it) }
+                appState.filmItemListMostPopular.let { adapterMostPopular.setFilmInfo(it) }
             }
             is AppState.Loading -> {
                 binding.loadingLayout.show()

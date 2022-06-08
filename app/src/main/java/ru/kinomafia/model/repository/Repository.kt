@@ -6,6 +6,6 @@ import ru.kinomafia.model.entities.rest_entities.FilmInfoDTO
 
 interface Repository {
     fun getFilmInfo(id: String, callback: Callback<FilmInfoDTO>)
-    fun getTop250FilmListFromServer() : List<FilmItem>?
-    fun getMostPopularMoviesFilmListFromServer() : List<FilmItem>?
+    fun getTop250FilmListFromServer() : List<FilmItem>
+    fun getMostPopularMoviesFilmListFromServer() : List<FilmItem>
 }
