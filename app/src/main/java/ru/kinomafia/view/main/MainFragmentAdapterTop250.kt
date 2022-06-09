@@ -29,7 +29,12 @@ class MainFragmentAdapterTop250(private var onItemViewClickListener: MainFragmen
 
         fun bind(filmItem: FilmItem) {
             itemView.apply {
-                Picasso.get().load(filmItem.image).placeholder(R.drawable.poster_no).into(poster_recycler_film_holder)
+                Picasso.get()
+                    .load(filmItem.image)
+                    .resize(880, 1320)
+                    .onlyScaleDown()
+                    .placeholder(R.drawable.poster_no)
+                    .into(poster_recycler_film_holder)
                 findViewById<TextView>(R.id.name_recycler_film_holder).text = filmItem.title
                 findViewById<TextView>(R.id.genre_recycler_film_holder).text = filmItem.imDbRating
                 findViewById<TextView>(R.id.year_recycler_film_holder).text = filmItem.year

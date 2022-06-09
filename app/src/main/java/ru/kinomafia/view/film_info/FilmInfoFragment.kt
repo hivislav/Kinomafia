@@ -50,7 +50,12 @@ class FilmInfoFragment : Fragment() {
                 root.simpleFunWithoutAction()
 
                 nameFilmInfo.text = appState.filmInfoDTO.title
-                Picasso.get().load(appState.filmInfoDTO.image).placeholder(R.drawable.poster_no).into(posterFilmInfo)
+                Picasso.get()
+                    .load(appState.filmInfoDTO.image)
+                    .resize(1760, 2640)
+                    .onlyScaleDown()
+                    .placeholder(R.drawable.poster_no)
+                    .into(posterFilmInfo)
                 genreFilmInfo.text = appState.filmInfoDTO.genres
                 yearFilmInfo.text = appState.filmInfoDTO.year
                 durationFilmInfo.text = appState.filmInfoDTO.runtimeStr
