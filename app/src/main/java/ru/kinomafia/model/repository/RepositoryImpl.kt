@@ -1,62 +1,54 @@
 package ru.kinomafia.model.repository
 
-import ru.kinomafia.model.FilmInfoLoader
-import ru.kinomafia.model.ListFilmLoader
-import ru.kinomafia.model.MOST_POPULAR_MOVIES_KEY
-import ru.kinomafia.model.TOP_250_MOVIES_KEY
-import ru.kinomafia.model.entities.FilmInfo
+import com.google.gson.GsonBuilder
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import ru.kinomafia.model.FilmApi
+import ru.kinomafia.model.IMDB_API_URL
 import ru.kinomafia.model.entities.FilmItem
+import ru.kinomafia.model.entities.rest_entities.FilmInfoDTO
+import ru.kinomafia.model.entities.rest_entities.FilmItemListDTO
 
 
 class RepositoryImpl: Repository {
-    override fun getFilmInfo(id: String): FilmInfo {
-        val dto = FilmInfoLoader.loadFilmInfo(id)
-        return FilmInfo(
-            dto?.id ?: "",
-            dto?.title ?: "",
-            dto?.year ?: "",
-            dto?.image ?: "",
-            dto?.runtimeStr ?: "",
-            dto?.plot ?: "",
-            dto?.directors ?: "",
-            dto?.stars ?: "",
-            dto?.genres ?: ""
+
+    private val retrofit = Retrofit.Builder()
+        .baseUrl(IMDB_API_URL)
+        .addConverterFactory(
+            GsonConverterFactory.create(
+                GsonBuilder().setLenient().create()
+            )
         )
-    }
+        .build().create(FilmApi::class.java)
 
-    override fun getMostPopularMoviesFilmListFromServer(): List<FilmItem> {
+    private fun converterDTOtoItemList(filmItemListDTO: FilmItemListDTO): List<FilmItem> {
         val result = emptyList<FilmItem>().toMutableList()
-        val dto = ListFilmLoader.loadListFilm(MOST_POPULAR_MOVIES_KEY)
-        dto?.let{
-            for (i in dto.items) {
-                val filmItem = FilmItem(
-                    i.id.toString(),
-                    i.title.toString(),
-                    i.year.toString(),
-                    i.image.toString(),
-                    i.imDbRating.toString()
-                )
-                result.add(filmItem)
-            }
+        val dto = filmItemListDTO.items
+        for (i in dto) {
+            val filmItem = FilmItem(
+                i.id.toString(),
+                i.title.toString(),
+                i.year.toString(),
+                i.image.toString(),
+                i.imDbRating.toString()
+            )
+            result.add(filmItem)
         }
         return result
     }
 
-    override fun getTop250FilmListFromServer(): List<FilmItem> {
-        val result = emptyList<FilmItem>().toMutableList()
-        val dto = ListFilmLoader.loadListFilm(TOP_250_MOVIES_KEY)
-        dto?.let{
-            for (i in dto.items) {
-                val filmItem = FilmItem(
-                    i.id.toString(),
-                    i.title.toString(),
-                    i.year.toString(),
-                    i.image.toString(),
-                    i.imDbRating.toString()
-                )
-                result.add(filmItem)
-            }
-        }
-        return result
+    override fun getFilmInfo(id: String, callback: Callback<FilmInfoDTO>) {
+        retrofit.getFilmInfo(filmID = id).enqueue(callback)
+    }
+
+    override fun getTop250FilmListFromServer() : List<FilmItem> {
+        val dto = retrofit.getFilmItemListTop250().execute().body()
+        return dto?.let { converterDTOtoItemList(it) } ?: emptyList()
+    }
+
+    override fun getMostPopularMoviesFilmListFromServer() : List<FilmItem> {
+        val dto = retrofit.getFilmItemListMostPopular().execute().body()
+        return dto?.let { converterDTOtoItemList(it) } ?: emptyList()
     }
 }
