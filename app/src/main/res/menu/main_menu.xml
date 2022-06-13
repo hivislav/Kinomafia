@@ -6,11 +6,11 @@
     <item
         android:id="@+id/main_menu_sort_by_rate"
         android:title="@string/main_menu_sort_button_text"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/main_menu_favourite"
         android:title="@string/main_menu_favourite"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
 
 </menu>

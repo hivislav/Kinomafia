@@ -14,7 +14,8 @@ import ru.kinomafia.databinding.FilmInfoFragmentBinding
 import ru.kinomafia.model.entities.FilmInfo
 import ru.kinomafia.model.entities.FilmItem
 import ru.kinomafia.view.favourite.NoteFavouriteDialogFragment
-import ru.kinomafia.view.favourite.NoteFavouriteDialogFragment.Companion.NOTE_FAVOURITE_DIALOG_FRAGMENT_KEY
+import ru.kinomafia.view.favourite.NoteFavouriteDialogFragment.Companion.NOTE_FAVOURITE_DIALOG_FRAGMENT_KEY_EXTRA
+import ru.kinomafia.view.favourite.NoteFavouriteDialogFragment.Companion.NOTE_FAVOURITE_DIALOG_FRAGMENT_REQUEST
 import ru.kinomafia.view.hide
 import ru.kinomafia.view.show
 import ru.kinomafia.view.simpleFunWithoutAction
@@ -31,7 +32,8 @@ class FilmInfoFragment : Fragment() {
 
     private lateinit var localFilmInfo: FilmInfo
 
-        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
 
         _binding = FilmInfoFragmentBinding.inflate(inflater, container, false)
@@ -50,8 +52,13 @@ class FilmInfoFragment : Fragment() {
 
         binding.starIconFilmInfo.setOnClickListener {
             NoteFavouriteDialogFragment.newInstance().show(requireActivity().supportFragmentManager, "")
-            localFilmInfo.note = arguments?.getString(NOTE_FAVOURITE_DIALOG_FRAGMENT_KEY).toString()
-            viewModel.addFavouriteFilm(localFilmInfo)
+
+            requireActivity().supportFragmentManager
+                .setFragmentResultListener(NOTE_FAVOURITE_DIALOG_FRAGMENT_REQUEST, this)
+                { key, bundle ->
+                    localFilmInfo.note = bundle.getString(NOTE_FAVOURITE_DIALOG_FRAGMENT_KEY_EXTRA) ?: ""
+                    viewModel.addFavouriteFilm(localFilmInfo)
+                }
         }
     }
 

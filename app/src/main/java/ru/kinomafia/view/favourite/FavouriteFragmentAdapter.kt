@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.favourite_recycler_film_item.view.*
-import kotlinx.android.synthetic.main.recycler_film_holder.view.*
 import ru.kinomafia.R
 import ru.kinomafia.model.entities.FilmInfo
 

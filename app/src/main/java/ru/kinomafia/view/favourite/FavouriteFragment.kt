@@ -10,17 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
-import com.squareup.picasso.Picasso
-import ru.kinomafia.R
 import ru.kinomafia.databinding.FavouriteFragmentBinding
-import ru.kinomafia.model.entities.FilmItem
 import ru.kinomafia.view.hide
 import ru.kinomafia.view.show
-import ru.kinomafia.view.simpleFunWithoutAction
-import ru.kinomafia.viewmodel.AppState
 import ru.kinomafia.viewmodel.AppStateFavourite
 import ru.kinomafia.viewmodel.FavouriteViewModel
-import ru.kinomafia.viewmodel.FilmInfoViewModel
 
 class FavouriteFragment : Fragment() {
     private var _binding: FavouriteFragmentBinding? = null

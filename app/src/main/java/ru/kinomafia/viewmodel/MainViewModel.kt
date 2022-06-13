@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.*
-
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import ru.kinomafia.model.repository.RepositoryRemote
 import ru.kinomafia.model.repository.RepositoryRemoteImpl
 

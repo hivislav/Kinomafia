@@ -7,9 +7,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModelProvider
 import ru.kinomafia.R
+import ru.kinomafia.viewmodel.FilmInfoViewModel
 
 class NoteFavouriteDialogFragment: DialogFragment() {
+
+    private val viewModel: FilmInfoViewModel by lazy {
+        ViewModelProvider(this).get(FilmInfoViewModel::class.java)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -19,12 +25,11 @@ class NoteFavouriteDialogFragment: DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         view.findViewById<Button>(R.id.favourite_dialog_add_note_button).setOnClickListener {
-
-            val note = view.findViewById<EditText>(R.id.favourite_dialog_add_note_edit_text).text
+            val note = view.findViewById<EditText>(R.id.favourite_dialog_add_note_edit_text).text.toString()
             val bundle = Bundle()
-            bundle.putString(NOTE_FAVOURITE_DIALOG_FRAGMENT_KEY, note.toString())
+            bundle.putString(NOTE_FAVOURITE_DIALOG_FRAGMENT_KEY_EXTRA, note)
+            requireActivity().supportFragmentManager.setFragmentResult(NOTE_FAVOURITE_DIALOG_FRAGMENT_REQUEST, bundle)
             dismiss()
         }
     }
@@ -32,6 +37,7 @@ class NoteFavouriteDialogFragment: DialogFragment() {
     companion object {
         fun newInstance() = NoteFavouriteDialogFragment()
 
-        const val NOTE_FAVOURITE_DIALOG_FRAGMENT_KEY = "NOTE_FAVOURITE_DIALOG_FRAGMENT_KEY"
+        const val NOTE_FAVOURITE_DIALOG_FRAGMENT_REQUEST = "NOTE_FAVOURITE_DIALOG_FRAGMENT_REQUEST"
+        const val NOTE_FAVOURITE_DIALOG_FRAGMENT_KEY_EXTRA = "NOTE_FAVOURITE_DIALOG_FRAGMENT_KEY_EXTRA"
     }
 }

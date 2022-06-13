@@ -47,6 +47,5 @@ class FilmInfoViewModel(private val liveData: MutableLiveData<AppState> =  Mutab
         override fun onFailure(call: Call<FilmInfoDTO>, t: Throwable) {
             TODO("Not yet implemented")
         }
-
     }
 }
