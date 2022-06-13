@@ -54,6 +54,16 @@
                 android:layout_marginEnd="@dimen/margin_film_info_fragment"
                 tools:src="@drawable/poster_no"/>
 
+            <ImageView
+                android:id="@+id/star_icon_film_info"
+                android:layout_width="@dimen/star_icon_size_film_info"
+                android:layout_height="@dimen/star_icon_size_film_info"
+                app:layout_constraintBottom_toBottomOf="@id/poster_film_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:adjustViewBounds="true"
+                android:layout_marginEnd="@dimen/margin_film_info_fragment"
+                android:src="@drawable/ic_star_for_add_favourite"/>
+
             <TextView
                 android:id="@+id/genre_label"
                 android:text="@string/genre_label_film_info"

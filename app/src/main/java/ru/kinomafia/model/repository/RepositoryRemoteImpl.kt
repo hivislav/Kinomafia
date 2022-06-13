@@ -6,12 +6,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.kinomafia.model.FilmApi
 import ru.kinomafia.model.IMDB_API_URL
+import ru.kinomafia.model.entities.FilmInfo
 import ru.kinomafia.model.entities.FilmItem
 import ru.kinomafia.model.entities.rest_entities.FilmInfoDTO
 import ru.kinomafia.model.entities.rest_entities.FilmItemListDTO
 
 
-class RepositoryImpl: Repository {
+class RepositoryRemoteImpl: RepositoryRemote {
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(IMDB_API_URL)
@@ -36,6 +37,21 @@ class RepositoryImpl: Repository {
             result.add(filmItem)
         }
         return result
+    }
+
+    fun converterDTOtoFilmInfo(filmInfoDTO: FilmInfoDTO): FilmInfo {
+        return FilmInfo(
+            filmInfoDTO.id,
+            filmInfoDTO.title,
+            filmInfoDTO.year,
+            filmInfoDTO.image,
+            filmInfoDTO.runtimeStr,
+            filmInfoDTO.plot,
+            filmInfoDTO.directors,
+            filmInfoDTO.stars,
+            filmInfoDTO.genres,
+            ""
+        )
     }
 
     override fun getFilmInfo(id: String, callback: Callback<FilmInfoDTO>) {

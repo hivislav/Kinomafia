@@ -1,6 +1,11 @@
-package ru.kinomafia.model.entities
+package ru.kinomafia.model.room
 
-data class FilmInfo(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "favourite_film_entity")
+data class FavouriteFilmEntity(
+    @PrimaryKey
     val id: String,
     val title:String,
     val year: String,
@@ -10,5 +15,5 @@ data class FilmInfo(
     val directors: String,
     val stars: String,
     val genres: String,
-    var note: String = ""
+    val note: String
 )

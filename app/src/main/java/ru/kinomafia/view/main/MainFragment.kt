@@ -12,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import ru.kinomafia.R
 import ru.kinomafia.databinding.MainFragmentBinding
 import ru.kinomafia.model.entities.FilmItem
+import ru.kinomafia.view.favourite.FavouriteFragment
 import ru.kinomafia.view.film_info.FilmInfoFragment
 import ru.kinomafia.view.hide
 import ru.kinomafia.view.show
@@ -162,6 +163,13 @@ class MainFragment : Fragment() {
         return when(item.itemId) {
             R.id.main_menu_sort_by_rate -> {
                 changeFilmListByRate()
+                true
+            }
+            R.id.main_menu_favourite -> {
+                activity?.supportFragmentManager?.beginTransaction()
+                    ?.add(R.id.container, FavouriteFragment.newInstance())
+                    ?.addToBackStack("")
+                    ?.commitAllowingStateLoss()
                 true
             }
             else -> {

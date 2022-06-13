@@ -6,12 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.*
 
-import ru.kinomafia.model.repository.Repository
-import ru.kinomafia.model.repository.RepositoryImpl
+import ru.kinomafia.model.repository.RepositoryRemote
+import ru.kinomafia.model.repository.RepositoryRemoteImpl
 
 class MainViewModel(
     private val liveData: MutableLiveData<AppState> = MutableLiveData(),
-    private val repositoryImpl: Repository = RepositoryImpl()
+    private val repositoryRemoteImpl: RepositoryRemote = RepositoryRemoteImpl()
 ) : ViewModel() {
 
     fun getLiveData(): LiveData<AppState>{
@@ -21,9 +21,9 @@ class MainViewModel(
     fun getDataFromServer() {
         liveData.value = AppState.Loading
         viewModelScope.launch(Dispatchers.Main) {
-            val taskTop250 = async(Dispatchers.IO) { repositoryImpl.getTop250FilmListFromServer() }
+            val taskTop250 = async(Dispatchers.IO) { repositoryRemoteImpl.getTop250FilmListFromServer() }
             val listFilmItemTop250 = taskTop250.await()
-            val taskMostPopular = async ( Dispatchers.IO ){repositoryImpl.getMostPopularMoviesFilmListFromServer() }
+            val taskMostPopular = async ( Dispatchers.IO ){repositoryRemoteImpl.getMostPopularMoviesFilmListFromServer() }
             val listFilmItemMostPopular = taskMostPopular.await()
             if (isActive) {
                 liveData.value = AppState.Success(listFilmItemTop250, listFilmItemMostPopular)
@@ -34,7 +34,7 @@ class MainViewModel(
     fun getFilmListsSortByRateFromServer() {
         liveData.value = AppState.Loading
         viewModelScope.launch(Dispatchers.Main) {
-            val taskFilmLists = async(Dispatchers.IO) {repositoryImpl.getFilmListsByRateFromServer()}
+            val taskFilmLists = async(Dispatchers.IO) {repositoryRemoteImpl.getFilmListsByRateFromServer()}
             val filmLists = taskFilmLists.await()
             if (isActive) {
                 liveData.value = AppState.Success(filmLists[0], filmLists[1])
