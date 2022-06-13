@@ -30,4 +30,15 @@ class MainViewModel(
             }
         }
     }
+
+    fun getFilmListsSortByRateFromServer() {
+        liveData.value = AppState.Loading
+        viewModelScope.launch(Dispatchers.Main) {
+            val taskFilmLists = async(Dispatchers.IO) {repositoryImpl.getFilmListsByRateFromServer()}
+            val filmLists = taskFilmLists.await()
+            if (isActive) {
+                liveData.value = AppState.Success(filmLists[0], filmLists[1])
+            }
+        }
+    }
 }

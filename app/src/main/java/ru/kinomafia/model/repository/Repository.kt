@@ -8,4 +8,5 @@ interface Repository {
     fun getFilmInfo(id: String, callback: Callback<FilmInfoDTO>)
     fun getTop250FilmListFromServer() : List<FilmItem>
     fun getMostPopularMoviesFilmListFromServer() : List<FilmItem>
+    fun getFilmListsByRateFromServer(): List<List<FilmItem>>
 }

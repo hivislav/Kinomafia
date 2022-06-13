@@ -51,4 +51,12 @@ class RepositoryImpl: Repository {
         val dto = retrofit.getFilmItemListMostPopular().execute().body()
         return dto?.let { converterDTOtoItemList(it) } ?: emptyList()
     }
+
+    override fun getFilmListsByRateFromServer(): List<List<FilmItem>> {
+        val listTop250 = getTop250FilmListFromServer().filter {
+           it.imDbRating != "" && it.imDbRating.toDouble() >= 6.0}
+        val listMostPopular = getMostPopularMoviesFilmListFromServer().filter {
+           it.imDbRating != "" && it.imDbRating.toDouble() >= 6.0}
+        return listOf(listTop250, listMostPopular)
+    }
 }
