@@ -6,12 +6,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.kinomafia.model.FilmApi
 import ru.kinomafia.model.IMDB_API_URL
+import ru.kinomafia.model.entities.FilmInfo
 import ru.kinomafia.model.entities.FilmItem
 import ru.kinomafia.model.entities.rest_entities.FilmInfoDTO
 import ru.kinomafia.model.entities.rest_entities.FilmItemListDTO
 
 
-class RepositoryImpl: Repository {
+class RepositoryRemoteImpl: RepositoryRemote {
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(IMDB_API_URL)
@@ -38,6 +39,21 @@ class RepositoryImpl: Repository {
         return result
     }
 
+    fun converterDTOtoFilmInfo(filmInfoDTO: FilmInfoDTO): FilmInfo {
+        return FilmInfo(
+            filmInfoDTO.id,
+            filmInfoDTO.title,
+            filmInfoDTO.year,
+            filmInfoDTO.image,
+            filmInfoDTO.runtimeStr,
+            filmInfoDTO.plot,
+            filmInfoDTO.directors,
+            filmInfoDTO.stars,
+            filmInfoDTO.genres,
+            ""
+        )
+    }
+
     override fun getFilmInfo(id: String, callback: Callback<FilmInfoDTO>) {
         retrofit.getFilmInfo(filmID = id).enqueue(callback)
     }
@@ -50,5 +66,13 @@ class RepositoryImpl: Repository {
     override fun getMostPopularMoviesFilmListFromServer() : List<FilmItem> {
         val dto = retrofit.getFilmItemListMostPopular().execute().body()
         return dto?.let { converterDTOtoItemList(it) } ?: emptyList()
+    }
+
+    override fun getFilmListsByRateFromServer(): List<List<FilmItem>> {
+        val listTop250 = getTop250FilmListFromServer().filter {
+           it.imDbRating != "" && it.imDbRating.toDouble() >= 6.0}
+        val listMostPopular = getMostPopularMoviesFilmListFromServer().filter {
+           it.imDbRating != "" && it.imDbRating.toDouble() >= 6.0}
+        return listOf(listTop250, listMostPopular)
     }
 }

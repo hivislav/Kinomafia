@@ -1,9 +1,8 @@
 package ru.kinomafia.view.main
 
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import ru.kinomafia.R
 import ru.kinomafia.databinding.MainFragmentBinding
 import ru.kinomafia.model.entities.FilmItem
+import ru.kinomafia.view.favourite.FavouriteFragment
 import ru.kinomafia.view.film_info.FilmInfoFragment
 import ru.kinomafia.view.hide
 import ru.kinomafia.view.show
@@ -25,8 +25,12 @@ class MainFragment : Fragment() {
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
 
+    private var isFilmChangedByRate = false
+
     companion object {
         fun newInstance() = MainFragment()
+
+        const val IS_FILM_CHANGED_BY_RATE_LISTS ="IS_FILM_CHANGED_BY_RATE_LISTS"
     }
 
     private val viewModel: MainViewModel by lazy {
@@ -68,6 +72,8 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setHasOptionsMenu(true)
+
         binding.top250RecyclerMainFragment.also {
             it.adapter = adapterTop250
             it.layoutManager = LinearLayoutManager(it.context,
@@ -86,7 +92,7 @@ class MainFragment : Fragment() {
             renderData(it)
         }
         viewModel.getLiveData().observe(viewLifecycleOwner, observer)
-        viewModel.getDataFromServer()
+        loadChangedFilmListsByRate()
     }
 
     override fun onDestroyView() {
@@ -115,5 +121,60 @@ class MainFragment : Fragment() {
 
     interface OnItemViewClickListener{
         fun onItemViewClick(filmItem: FilmItem)
+    }
+
+    private fun saveChangedFilmListsByRate () {
+        val sharedPreferences = activity?.getPreferences(Context.MODE_PRIVATE)?.edit()
+        sharedPreferences?.putBoolean(IS_FILM_CHANGED_BY_RATE_LISTS, isFilmChangedByRate)
+        sharedPreferences?.apply()
+    }
+
+    private fun loadChangedFilmListsByRate () {
+        activity?.let {
+            isFilmChangedByRate = activity
+                ?.getPreferences(Context.MODE_PRIVATE)
+                ?.getBoolean(IS_FILM_CHANGED_BY_RATE_LISTS, false)
+                ?: false
+        }
+        if (isFilmChangedByRate) {
+            viewModel.getFilmListsSortByRateFromServer()
+        } else {
+            viewModel.getDataFromServer()
+        }
+    }
+
+    private fun changeFilmListByRate () {
+        isFilmChangedByRate = !isFilmChangedByRate
+
+        if (isFilmChangedByRate) {
+            viewModel.getFilmListsSortByRateFromServer()
+        } else {
+            viewModel.getDataFromServer()
+        }
+        saveChangedFilmListsByRate()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.main_menu_sort_by_rate -> {
+                changeFilmListByRate()
+                true
+            }
+            R.id.main_menu_favourite -> {
+                activity?.supportFragmentManager?.beginTransaction()
+                    ?.add(R.id.container, FavouriteFragment.newInstance())
+                    ?.addToBackStack("")
+                    ?.commitAllowingStateLoss()
+                true
+            }
+            else -> {
+                false
+            }
+        }
     }
 }

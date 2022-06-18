@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_film_info_fragment">
+
+    <TextView
+        android:id="@+id/favourite_dialog_add_note_label"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="@dimen/favourite_dialog_padding"
+        android:textSize="@dimen/actors_text_size_film_info"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/favourite_dialog_add_note_text_label">
+    </TextView>
+
+    <EditText
+        android:id="@+id/favourite_dialog_add_note_edit_text"
+        app:layout_constraintTop_toBottomOf="@id/favourite_dialog_add_note_label"
+        app:layout_constraintStart_toStartOf="@id/favourite_dialog_add_note_label"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text ="Нужно посмотреть этот фильм">
+    </EditText>
+
+    <Button
+        android:id="@+id/favourite_dialog_add_note_button"
+        app:layout_constraintTop_toBottomOf="@id/favourite_dialog_add_note_edit_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/margin_film_info_fragment"
+        android:text="@string/favourite_dialog_fragment_button_ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </Button>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

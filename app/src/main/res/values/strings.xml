@@ -5,4 +5,9 @@
     <string name="actors_label_film_info">Актёры</string>
     <string name="top250_title_main_fragment">ТОП-250 по версии IMDB</string>
     <string name="most_popular_title_main_fragment">Популярные фильмы</string>
+    <string name="main_menu_sort_button_text">Фильмы с рейтингом от 6.0</string>
+    <string name="favourite_recycler_item_note_label">Заметка:</string>
+    <string name="main_menu_favourite">Избранное</string>
+    <string name="favourite_dialog_fragment_button_ok">Ок</string>
+    <string name="favourite_dialog_add_note_text_label">Добавьте заметку для сохранения в избранном:</string>
 </resources>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/favourite_poster"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:adjustViewBounds="true"
+        android:layout_marginStart = "@dimen/margin_film_info_fragment"
+        android:layout_marginTop = "@dimen/margin_film_info_fragment"
+        android:layout_marginBottom = "@dimen/margin_film_info_fragment"
+        tools:src = "@drawable/poster_no">
+    </ImageView>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:layout_margin = "@dimen/margin_film_info_fragment"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/favourite_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/margin_film_info_fragment"
+            android:textStyle="bold"
+            tools:text="Название фильма">
+        </TextView>
+
+        <TextView
+            android:id="@+id/favourite_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/margin_film_info_fragment"
+            android:textStyle="bold"
+            tools:text="Год выхода">
+        </TextView>
+
+        <TextView
+            android:id="@+id/favourite_genre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/margin_film_info_fragment"
+            android:textStyle="bold"
+            tools:text="Жанр фильма">
+        </TextView>
+
+        <TextView
+            android:id="@+id/favourite_note_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/margin_film_info_fragment"
+            android:layout_marginTop="@dimen/margin_film_info_fragment"
+            android:textStyle="bold"
+            android:text="@string/favourite_recycler_item_note_label">
+        </TextView>
+
+        <TextView
+            android:id="@+id/favourite_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="italic"
+            tools:text="Надо посмотреть на выходных">
+        </TextView>
+
+    </LinearLayout>
+
+</LinearLayout>

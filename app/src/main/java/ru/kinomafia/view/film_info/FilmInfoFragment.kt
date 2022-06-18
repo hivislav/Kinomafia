@@ -11,7 +11,11 @@ import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import ru.kinomafia.R
 import ru.kinomafia.databinding.FilmInfoFragmentBinding
+import ru.kinomafia.model.entities.FilmInfo
 import ru.kinomafia.model.entities.FilmItem
+import ru.kinomafia.view.favourite.NoteFavouriteDialogFragment
+import ru.kinomafia.view.favourite.NoteFavouriteDialogFragment.Companion.NOTE_FAVOURITE_DIALOG_FRAGMENT_KEY_EXTRA
+import ru.kinomafia.view.favourite.NoteFavouriteDialogFragment.Companion.NOTE_FAVOURITE_DIALOG_FRAGMENT_REQUEST
 import ru.kinomafia.view.hide
 import ru.kinomafia.view.show
 import ru.kinomafia.view.simpleFunWithoutAction
@@ -26,6 +30,9 @@ class FilmInfoFragment : Fragment() {
         ViewModelProvider(this).get(FilmInfoViewModel::class.java)
     }
 
+    private lateinit var localFilmInfo: FilmInfo
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
 
@@ -36,10 +43,22 @@ class FilmInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val filmInfo = arguments?.getParcelable<FilmItem>(BUNDLE_EXTRA)?.let {
+        arguments?.getParcelable<FilmItem>(BUNDLE_EXTRA)?.let {
+
             viewModel.getLiveData().observe(viewLifecycleOwner,
                 Observer<AppState> {appState: AppState ->  renderData(appState)})
             viewModel.loadFilmInfoFromServer(it.id)
+        }
+
+        binding.starIconFilmInfo.setOnClickListener {
+            NoteFavouriteDialogFragment.newInstance().show(requireActivity().supportFragmentManager, "")
+
+            requireActivity().supportFragmentManager
+                .setFragmentResultListener(NOTE_FAVOURITE_DIALOG_FRAGMENT_REQUEST, this)
+                { key, bundle ->
+                    localFilmInfo.note = bundle.getString(NOTE_FAVOURITE_DIALOG_FRAGMENT_KEY_EXTRA) ?: ""
+                    viewModel.addFavouriteFilm(localFilmInfo)
+                }
         }
     }
 
@@ -48,20 +67,21 @@ class FilmInfoFragment : Fragment() {
             is AppState.SuccessLoadingFilmInfo -> {
                 loadingLayout.hide()
                 root.simpleFunWithoutAction()
+                localFilmInfo = appState.filmInfo
 
-                nameFilmInfo.text = appState.filmInfoDTO.title
+                nameFilmInfo.text = appState.filmInfo.title
                 Picasso.get()
-                    .load(appState.filmInfoDTO.image)
+                    .load(appState.filmInfo.image)
                     .resize(1760, 2640)
                     .onlyScaleDown()
                     .placeholder(R.drawable.poster_no)
                     .into(posterFilmInfo)
-                genreFilmInfo.text = appState.filmInfoDTO.genres
-                yearFilmInfo.text = appState.filmInfoDTO.year
-                durationFilmInfo.text = appState.filmInfoDTO.runtimeStr
-                annotationFilmInfo.text = appState.filmInfoDTO.plot
-                directorFilmInfo.text = appState.filmInfoDTO.directors
-                actorsFilmInfo.text = appState.filmInfoDTO.stars
+                genreFilmInfo.text = appState.filmInfo.genres
+                yearFilmInfo.text = appState.filmInfo.year
+                durationFilmInfo.text = appState.filmInfo.runtimeStr
+                annotationFilmInfo.text = appState.filmInfo.plot
+                directorFilmInfo.text = appState.filmInfo.directors
+                actorsFilmInfo.text = appState.filmInfo.stars
             }
             is AppState.Loading -> {
                 loadingLayout.show()
@@ -79,6 +99,7 @@ class FilmInfoFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 
     companion object {
         const val BUNDLE_EXTRA = "filmInfo"
