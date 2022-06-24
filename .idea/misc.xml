@@ -6,6 +6,7 @@
         <entry key="..\:/Geekbrains/AndroidStudioProjects/Kinomafia/app/src/main/res/drawable/ic_calendar_date_film_info.xml" value="0.1765" />
         <entry key="..\:/Geekbrains/AndroidStudioProjects/Kinomafia/app/src/main/res/drawable/ic_director_film_info.xml" value="0.1755" />
         <entry key="..\:/Geekbrains/AndroidStudioProjects/Kinomafia/app/src/main/res/drawable/recycler_film_holder_style.xml" value="0.1755" />
+        <entry key="..\:/Geekbrains/AndroidStudioProjects/Kinomafia/app/src/main/res/drawable/selector_bottom_bavigation.xml" value="0.184" />
         <entry key="..\:/Geekbrains/AndroidStudioProjects/Kinomafia/app/src/main/res/drawable/shape.xml" value="0.1755" />
         <entry key="..\:/Geekbrains/AndroidStudioProjects/Kinomafia/app/src/main/res/drawable/shape_film_holder_style.xml" value="0.1775" />
         <entry key="..\:/Geekbrains/AndroidStudioProjects/Kinomafia/app/src/main/res/layout/favourite_fragment.xml" value="0.2296195652173913" />
@@ -17,6 +18,7 @@
         <entry key="..\:/Geekbrains/AndroidStudioProjects/Kinomafia/app/src/main/res/layout/main_fragment.xml" value="0.24954710144927536" />
         <entry key="..\:/Geekbrains/AndroidStudioProjects/Kinomafia/app/src/main/res/layout/recycler_film_holder.xml" value="0.4" />
         <entry key="..\:/Geekbrains/AndroidStudioProjects/Kinomafia/app/src/main/res/menu/main_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Geekbrains/AndroidStudioProjects/Kinomafia/app/src/main/res/menu/main_menu_bottom_navigation.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

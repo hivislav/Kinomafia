@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemBottomNavigationNews"
+        android:title="@string/bottom_navigation_title_news"
+        android:icon="@drawable/ic_bottom_navigation_news"/>
+
+    <item
+        android:id="@+id/itemBottomNavigationSearch"
+        android:title="@string/bottom_navigation_title_search"
+        android:icon="@drawable/ic_bottom_navigation_search" />
+
+    <item
+        android:id="@+id/itemBottomNavigationFavourite"
+        android:title="@string/main_menu_favourite"
+        android:icon="@drawable/ic_bottom_navigation_favourite"/>
+
+    <item
+        android:id="@+id/itemBottomNavigationSettings"
+        android:title="@string/bottom_navigation_title_settings"
+        android:icon="@drawable/ic_bottom_navigation_settings" />
+
+</menu>
