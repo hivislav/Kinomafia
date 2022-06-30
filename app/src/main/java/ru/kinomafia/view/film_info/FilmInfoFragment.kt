@@ -18,8 +18,8 @@ import ru.kinomafia.view.favourite.NoteFavouriteDialogFragment.Companion.NOTE_FA
 import ru.kinomafia.view.favourite.NoteFavouriteDialogFragment.Companion.NOTE_FAVOURITE_DIALOG_FRAGMENT_REQUEST
 import ru.kinomafia.view.hide
 import ru.kinomafia.view.show
-import ru.kinomafia.view.simpleFunWithoutAction
-import ru.kinomafia.viewmodel.AppState
+import ru.kinomafia.viewmodel.AppStateFilmInfo
+import ru.kinomafia.viewmodel.AppStateMain
 import ru.kinomafia.viewmodel.FilmInfoViewModel
 
 class FilmInfoFragment : Fragment() {
@@ -46,7 +46,7 @@ class FilmInfoFragment : Fragment() {
         arguments?.getParcelable<FilmItem>(BUNDLE_EXTRA)?.let {
 
             viewModel.getLiveData().observe(viewLifecycleOwner,
-                Observer<AppState> {appState: AppState ->  renderData(appState)})
+                Observer<AppStateFilmInfo> { appStateFilmInfo: AppStateFilmInfo ->  renderData(appStateFilmInfo)})
             viewModel.loadFilmInfoFromServer(it.id)
         }
 
@@ -62,34 +62,35 @@ class FilmInfoFragment : Fragment() {
         }
     }
 
-    private fun renderData(appState: AppState) = with(binding) {
-        when(appState) {
-            is AppState.SuccessLoadingFilmInfo -> {
+    private fun renderData(appStateFilmInfo: AppStateFilmInfo) = with(binding) {
+        when(appStateFilmInfo) {
+            is AppStateFilmInfo.SuccessLoadingFilmInfo -> {
                 loadingLayout.hide()
-                root.simpleFunWithoutAction()
-                localFilmInfo = appState.filmInfo
+                localFilmInfo = appStateFilmInfo.filmInfo
 
-                nameFilmInfo.text = appState.filmInfo.title
+                nameFilmInfo.text = appStateFilmInfo.filmInfo.title
                 Picasso.get()
-                    .load(appState.filmInfo.image)
+                    .load(appStateFilmInfo.filmInfo.image)
                     .resize(1760, 2640)
                     .onlyScaleDown()
                     .placeholder(R.drawable.poster_no)
                     .into(posterFilmInfo)
-                genreFilmInfo.text = appState.filmInfo.genres
-                yearFilmInfo.text = appState.filmInfo.year
-                durationFilmInfo.text = appState.filmInfo.runtimeStr
-                annotationFilmInfo.text = appState.filmInfo.plot
-                directorFilmInfo.text = appState.filmInfo.directors
-                actorsFilmInfo.text = appState.filmInfo.stars
+                genreFilmInfo.text = appStateFilmInfo.filmInfo.genres
+                yearFilmInfo.text = appStateFilmInfo.filmInfo.year
+                durationFilmInfo.text = appStateFilmInfo.filmInfo.runtimeStr
+                annotationFilmInfo.text = appStateFilmInfo.filmInfo.plot
+                directorFilmInfo.text = appStateFilmInfo.filmInfo.directors
+                actorsFilmInfo.text = appStateFilmInfo.filmInfo.stars
             }
-            is AppState.Loading -> {
+            is AppStateFilmInfo.Loading -> {
                 loadingLayout.show()
             }
-            is AppState.Error -> {
+            is AppStateFilmInfo.Error -> {
                 loadingLayout.hide()
-                Snackbar.make(binding.root, "Error", Snackbar.LENGTH_LONG)
-                    .setAction("Попробуйте еще раз") {viewModel.loadFilmInfoFromServer(appState.filmID)}.show()
+                appStateFilmInfo.error.localizedMessage?.let {
+                    Snackbar.make(binding.root, it, Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Попробуйте еще раз") {viewModel.loadFilmInfoFromServer(appStateFilmInfo.filmID)}.show()
+                }
             }
             else -> {}
         }

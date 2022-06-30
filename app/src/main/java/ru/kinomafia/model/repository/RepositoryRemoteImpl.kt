@@ -23,7 +23,7 @@ class RepositoryRemoteImpl: RepositoryRemote {
         )
         .build().create(FilmApi::class.java)
 
-    private fun converterDTOtoItemList(filmItemListDTO: FilmItemListDTO): List<FilmItem> {
+    fun converterDTOtoItemList(filmItemListDTO: FilmItemListDTO): List<FilmItem> {
         val result = emptyList<FilmItem>().toMutableList()
         val dto = filmItemListDTO.items
         for (i in dto) {
@@ -58,21 +58,21 @@ class RepositoryRemoteImpl: RepositoryRemote {
         retrofit.getFilmInfo(filmID = id).enqueue(callback)
     }
 
-    override fun getTop250FilmListFromServer() : List<FilmItem> {
-        val dto = retrofit.getFilmItemListTop250().execute().body()
-        return dto?.let { converterDTOtoItemList(it) } ?: emptyList()
+    override fun getTop250FilmListFromServer(callback: Callback<FilmItemListDTO>) {
+        retrofit.getFilmItemListTop250().enqueue(callback)
     }
 
-    override fun getMostPopularMoviesFilmListFromServer() : List<FilmItem> {
-        val dto = retrofit.getFilmItemListMostPopular().execute().body()
-        return dto?.let { converterDTOtoItemList(it) } ?: emptyList()
+    override fun getMostPopularMoviesFilmListFromServer(callback: Callback<FilmItemListDTO>) {
+        retrofit.getFilmItemListMostPopular().enqueue(callback)
     }
+
 
     override fun getFilmListsByRateFromServer(): List<List<FilmItem>> {
-        val listTop250 = getTop250FilmListFromServer().filter {
-           it.imDbRating != "" && it.imDbRating.toDouble() >= 6.0}
-        val listMostPopular = getMostPopularMoviesFilmListFromServer().filter {
-           it.imDbRating != "" && it.imDbRating.toDouble() >= 6.0}
-        return listOf(listTop250, listMostPopular)
+//        val listTop250 = getTop250FilmListFromServer().filter {
+//           it.imDbRating != "" && it.imDbRating.toDouble() >= 6.0}
+//        val listMostPopular = getMostPopularMoviesFilmListFromServer().filter {
+//           it.imDbRating != "" && it.imDbRating.toDouble() >= 6.0}
+//        return listOf(listTop250, listMostPopular)
+        return emptyList()
     }
 }

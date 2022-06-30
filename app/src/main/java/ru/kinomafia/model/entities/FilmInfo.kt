@@ -5,7 +5,7 @@ data class FilmInfo(
     val title:String,
     val year: String,
     val image: String,
-    val runtimeStr: String,
+    val runtimeStr: String?,
     val plot: String,
     val directors: String,
     val stars: String,

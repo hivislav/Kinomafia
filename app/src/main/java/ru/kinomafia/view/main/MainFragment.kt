@@ -16,8 +16,7 @@ import ru.kinomafia.view.favourite.FavouriteFragment
 import ru.kinomafia.view.film_info.FilmInfoFragment
 import ru.kinomafia.view.hide
 import ru.kinomafia.view.show
-import ru.kinomafia.view.simpleFunWithoutAction
-import ru.kinomafia.viewmodel.AppState
+import ru.kinomafia.viewmodel.AppStateMain
 import ru.kinomafia.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
@@ -88,7 +87,7 @@ class MainFragment : Fragment() {
             it.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.HORIZONTAL))
         }
 
-        val observer = Observer<AppState> {
+        val observer = Observer<AppStateMain> {
             renderData(it)
         }
         viewModel.getLiveData().observe(viewLifecycleOwner, observer)
@@ -100,21 +99,28 @@ class MainFragment : Fragment() {
         _binding = null
     }
 
-    private fun renderData(appState: AppState) {
-        when(appState) {
-            is AppState.Success -> {
+    private fun renderData(appStateMain: AppStateMain) {
+        when(appStateMain) {
+            is AppStateMain.SuccessLoadTop250 -> {
                 binding.loadingLayout.hide()
-                binding.root.simpleFunWithoutAction()
-                appState.filmItemListTop250.let { adapterTop250.setFilmInfo(it) }
-                appState.filmItemListMostPopular.let { adapterMostPopular.setFilmInfo(it) }
+                appStateMain.filmItemListTop250.let { adapterTop250.setFilmInfo(it) }
             }
-            is AppState.Loading -> {
+
+            is AppStateMain.SuccessLoadMostPopular -> {
+                binding.loadingLayout.hide()
+
+                appStateMain.filmItemListMostPopular.let { adapterMostPopular.setFilmInfo(it) }
+            }
+
+            is AppStateMain.Loading -> {
                 binding.loadingLayout.show()
             }
-            is AppState.Error -> {
+            is AppStateMain.Error -> {
                 binding.loadingLayout.hide()
-                Snackbar.make(binding.root, "Error", Snackbar.LENGTH_LONG)
-                    .setAction("Попробуйте еще раз") {viewModel.getDataFromServer()}.show()
+                appStateMain.error.localizedMessage?.let {
+                    Snackbar.make(binding.root, it, Snackbar.LENGTH_INDEFINITE)
+                        .setAction("Попробуйте еще раз") {viewModel.getDataFromServer()}.show()
+                }
             }
         }
     }

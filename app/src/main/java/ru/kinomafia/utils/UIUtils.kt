@@ -15,8 +15,3 @@ fun View.hide() : View {
     }
     return this
 }
-
-fun View.simpleFunWithoutAction(text: String = "Загрузка успешна",
-                                    length: Int = Snackbar.LENGTH_LONG) {
-    Snackbar.make(this, text, length).show()
-}

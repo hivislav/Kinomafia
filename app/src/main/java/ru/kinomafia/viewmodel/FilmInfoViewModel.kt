@@ -13,12 +13,12 @@ import ru.kinomafia.model.entities.rest_entities.FilmInfoDTO
 import ru.kinomafia.model.repository.RepositoryLocalImpl
 import ru.kinomafia.model.repository.RepositoryRemoteImpl
 
-class FilmInfoViewModel(private val liveData: MutableLiveData<AppState> =  MutableLiveData(),
+class FilmInfoViewModel(private val liveData: MutableLiveData<AppStateFilmInfo> =  MutableLiveData(),
                         private val repositoryRemoteImpl: RepositoryRemoteImpl = RepositoryRemoteImpl(),
                         private val repositoryLocalImpl: RepositoryLocalImpl = RepositoryLocalImpl()
 ) : ViewModel() {
 
-    fun getLiveData(): MutableLiveData<AppState> {
+    fun getLiveData(): MutableLiveData<AppStateFilmInfo> {
         return liveData
     }
 
@@ -29,23 +29,31 @@ class FilmInfoViewModel(private val liveData: MutableLiveData<AppState> =  Mutab
     }
 
     fun loadFilmInfoFromServer(id: String) {
-        liveData.postValue(AppState.Loading)
+        liveData.postValue(AppStateFilmInfo.Loading)
         repositoryRemoteImpl.getFilmInfo(id, callback)
     }
 
+
     private val callback = object: Callback<FilmInfoDTO> {
+        var id = ""
+
         override fun onResponse(call: Call<FilmInfoDTO>, response: Response<FilmInfoDTO>) {
+            response.body()?.let {
+                id = it.id
+            }
+
             if (response.isSuccessful) {
                 response.body()?.let {
-                    liveData.postValue(AppState.SuccessLoadingFilmInfo(repositoryRemoteImpl.converterDTOtoFilmInfo(it)))
+                    liveData.postValue(AppStateFilmInfo.SuccessLoadingFilmInfo(repositoryRemoteImpl.converterDTOtoFilmInfo(it)))
                 }
             } else {
-                //TODO
+                val error = Throwable(response.code().toString())
+                liveData.postValue(AppStateFilmInfo.Error(id, error))
             }
         }
 
         override fun onFailure(call: Call<FilmInfoDTO>, t: Throwable) {
-            TODO("Not yet implemented")
+            liveData.postValue(AppStateFilmInfo.Error(id, t))
         }
     }
 }

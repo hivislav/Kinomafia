@@ -27,7 +27,7 @@ class RepositoryLocalImpl: RepositoryLocal {
             filmInfo.title,
             filmInfo.year,
             filmInfo.image,
-            filmInfo.runtimeStr,
+            filmInfo.runtimeStr ?: "",
             filmInfo.plot,
             filmInfo.directors,
             filmInfo.stars,
