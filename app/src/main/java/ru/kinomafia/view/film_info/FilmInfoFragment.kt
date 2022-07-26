@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import coil.load
 import com.google.android.material.snackbar.Snackbar
-import com.squareup.picasso.Picasso
 import ru.kinomafia.R
 import ru.kinomafia.databinding.FilmInfoFragmentBinding
 import ru.kinomafia.model.entities.FilmInfo
@@ -69,12 +70,12 @@ class FilmInfoFragment : Fragment() {
                 localFilmInfo = appStateFilmInfo.filmInfo
 
                 nameFilmInfo.text = appStateFilmInfo.filmInfo.title
-                Picasso.get()
-                    .load(appStateFilmInfo.filmInfo.image)
-                    .resize(1760, 2640)
-                    .onlyScaleDown()
-                    .placeholder(R.drawable.poster_no)
-                    .into(posterFilmInfo)
+
+                posterFilmInfo
+                    .load(appStateFilmInfo.filmInfo.image) {
+                        placeholder(R.drawable.poster_no)
+                    }
+
                 genreFilmInfo.text = appStateFilmInfo.filmInfo.genres
                 yearFilmInfo.text = appStateFilmInfo.filmInfo.year
                 durationFilmInfo.text = appStateFilmInfo.filmInfo.runtimeStr

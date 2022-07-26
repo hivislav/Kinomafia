@@ -3,9 +3,11 @@ package ru.kinomafia.view.favourite
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
+import coil.load
+
 import kotlinx.android.synthetic.main.favourite_recycler_film_item.view.*
 import ru.kinomafia.R
 import ru.kinomafia.model.entities.FilmInfo
@@ -40,12 +42,10 @@ class FavouriteFragmentAdapter: RecyclerView.Adapter<FavouriteFragmentAdapter.Fa
                 findViewById<TextView>(R.id.favourite_genre).text = filmInfo.genres
                 findViewById<TextView>(R.id.favourite_note).text = filmInfo.note
 
-                Picasso
-                    .get().load(filmInfo.image)
-                    .resize(880, 1320)
-                    .onlyScaleDown()
-                    .placeholder(R.drawable.poster_no)
-                    .into(itemView.favourite_poster)
+                findViewById<ImageView>(R.id.favourite_poster)
+                    .load(filmInfo.image) {
+                        placeholder(R.drawable.poster_no)
+                    }
             }
         }
     }

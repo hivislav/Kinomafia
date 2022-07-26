@@ -4,9 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
+import coil.load
 import kotlinx.android.synthetic.main.recycler_film_holder.view.*
 import ru.kinomafia.R
 import ru.kinomafia.model.entities.FilmItem
@@ -29,12 +30,12 @@ class MainFragmentAdapterMostPopular(private var onItemViewClickListener: MainFr
 
         fun bind(filmItem: FilmItem) {
             itemView.apply {
-                Picasso
-                    .get().load(filmItem.image)
-                    .resize(880, 1320)
-                    .onlyScaleDown()
-                    .placeholder(R.drawable.poster_no)
-                    .into(poster_recycler_film_holder)
+
+                poster_recycler_film_holder
+                    .load(filmItem.image) {
+                        placeholder(R.drawable.poster_no)
+                    }
+
                 findViewById<TextView>(R.id.name_recycler_film_holder).text = filmItem.title
                 findViewById<TextView>(R.id.genre_recycler_film_holder).text = filmItem.imDbRating
                 findViewById<TextView>(R.id.year_recycler_film_holder).text = filmItem.year

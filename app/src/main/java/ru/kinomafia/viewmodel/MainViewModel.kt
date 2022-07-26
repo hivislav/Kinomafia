@@ -38,15 +38,15 @@ class MainViewModel(
     private val callback = object: Callback<FilmItemListDTO> {
         override fun onResponse(call: Call<FilmItemListDTO>, response: Response<FilmItemListDTO>) {
 
-            val typeOfResponse = response.raw().request().url().toString()
+            val typeOfResponse = response.raw().request.url.toString()
 
             if (response.isSuccessful) {
                 response.body()?.let {
                     if (typeOfResponse.contains(IMDB_TOP_250_MOVIES_END_POINT)) {
-                        liveData.postValue(AppStateMain.SuccessLoadTop250(repositoryRemoteImpl.converterDTOtoItemList(it)))
+                        liveData.value = AppStateMain.SuccessLoadTop250(repositoryRemoteImpl.converterDTOtoItemList(it))
                     }
                     if (typeOfResponse.contains(IMDB_MOST_POPULAR_MOVIES_END_POINT)) {
-                        liveData.postValue(AppStateMain.SuccessLoadMostPopular(repositoryRemoteImpl.converterDTOtoItemList(it)))
+                        liveData.value = AppStateMain.SuccessLoadMostPopular(repositoryRemoteImpl.converterDTOtoItemList(it))
                     }
                 }
             } else {
