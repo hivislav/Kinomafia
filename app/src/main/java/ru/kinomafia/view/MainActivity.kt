@@ -1,5 +1,6 @@
 package ru.kinomafia.view
 
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.navigation.NavigationBarView
@@ -14,28 +15,37 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: MainActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        setTheme(R.style.Theme_Kinomafia)
+        binding = MainActivityBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
 
-        binding = MainActivityBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        binding.mainBottomNavigation.hide()
+        if (savedInstanceState == null) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+                binding.mainBottomNavigation.hide()
+                supportActionBar?.hide()
 
+                val gifDrawable = GifDrawable(resources, R.drawable.start_app_animation)
+                startAppAnimation.setImageDrawable(gifDrawable)
+                gifDrawable.loopCount = 1
 
-        val gifDrawable = GifDrawable(resources, R.drawable.start_app_animation)
-        startAppAnimation.setImageDrawable(gifDrawable)
-        gifDrawable.loopCount = 1
-
-        gifDrawable.addAnimationListener {
-            startAppAnimation.hide()
-            binding.mainBottomNavigation.show()
-            if (savedInstanceState == null) {
+                gifDrawable.addAnimationListener {
+                    startAppAnimation.hide()
+                    binding.mainBottomNavigation.show()
+                    supportActionBar?.show()
+                    binding.mainBottomNavigation.selectedItemId = R.id.itemBottomNavigationSearch
+                }
+            } else {
+                supportFragmentManager.beginTransaction().add(R.id.container, MainFragment.newInstance()).commit()
                 binding.mainBottomNavigation.selectedItemId = R.id.itemBottomNavigationSearch
             }
         }
 
-        binding.mainBottomNavigation.setOnNavigationItemSelectedListener {
+
+        binding.mainBottomNavigation.setOnItemSelectedListener {
             when(it.itemId) {
                 R.id.itemBottomNavigationNews -> {
                     true
